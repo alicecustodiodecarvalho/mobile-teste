@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, View } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
-import Footer from '../components/Footer'
+// import Footer from '../components/Footer'
 import CardMeuVeiculo from '../components/CardMeuVeiculo';
 
 export default function MeusVeiculos() {
@@ -13,7 +13,7 @@ export default function MeusVeiculos() {
                 <CardMeuVeiculo/>
             </ScrollView>
             </View>
-            <Footer />
+            {/* <Footer /> */}
         </View>
     );
 }

@@ -16,13 +16,13 @@ export default function Footer() {
             <TouchableOpacity onPress={() => navigation.navigate('Catalogo')}>
                 <Feather name="search" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Add')}>
+            <TouchableOpacity onPress={() => navigation.navigate('LocalizacaoCarro')}>
                 <AntDesign name="plus" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Cars')}>
+            <TouchableOpacity onPress={() => navigation.navigate('MeusVeiculos')}>
                 <Ionicons name="car-sport-outline" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.navigate('SideBarUser')}>
                 <Feather name="menu" size={25} color="white" />
             </TouchableOpacity>
         </View>

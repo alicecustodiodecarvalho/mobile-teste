@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CatalogoCarros from './pages/CatalogoCarros';
 import Home from './pages/Home';
 import Footer from './components/Footer';
+import LocalizacaoCarro from './pages/LocalizacaoCarro';
+import SideBarUser from './pages/SideBarUser';
+import MeusVeiculos from './pages/MeusVeiculos';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +22,21 @@ export default function App() {
         <Stack.Screen 
           name="Catalogo" 
           component={CatalogoCarros} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="LocalizacaoCarro" 
+          component={LocalizacaoCarro} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="SideBarUser" 
+          component={SideBarUser} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="MeusVeiculos" 
+          component={MeusVeiculos} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
         />
       </Stack.Navigator>
