@@ -1,14 +1,20 @@
-import { StyleSheet, ImageBackground, View, Text, TextInput, Pressable } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
+
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <ImageBackground
                 style={styles.bg}
                 source={require('../assets/images/background.png')}>
                 <View style={styles.overlay}>
-                    <MaterialIcons name="keyboard-backspace" size={24} color="black" style={styles.voltar} />
+                    <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="keyboard-backspace" size={24} color="black" />
+                    </TouchableOpacity>
                     <Text style={styles.title}>CarTech</Text>
                     <Text style={styles.login}>Login</Text>
                     <TextInput
@@ -19,11 +25,11 @@ export default function Login() {
                         style={[styles.input, { marginBottom: 60 }]}
                         placeholder="Senha"
                     />
-                    <Pressable style={styles.button} >
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                         <Text style={styles.text}>Entrar</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                     <Text style={styles.signupText}>
-                        Não tem uma conta? <Text style={styles.signupLink}>Criar conta</Text>
+                        Não tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Registro')}>Criar conta</Text>
                     </Text>
                 </View>
             </ImageBackground>
@@ -84,7 +90,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     signupText: {
-        marginTop: 20,
         color: '#333',
         fontSize: 14,
     },

@@ -1,14 +1,20 @@
-import { StyleSheet, ImageBackground, View, Text, TextInput, Pressable } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Registro() {
+
+    const navigation = useNavigation();
+
     return (
 
         <ImageBackground style={styles.bg} source={require('../assets/images/background.png')}>
             <View style={styles.overlay}>
 
                 <View style={styles.registro}>
-                    <MaterialIcons name="keyboard-backspace" size={24} color="black" />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="keyboard-backspace" size={24} color="black" />
+                    </TouchableOpacity>
                     <Text style={styles.title}>Registro</Text>
                     <View><Text style={styles.nada}>.....</Text></View>
                 </View>
@@ -42,11 +48,11 @@ export default function Registro() {
                         </View>
                     </View>
                     <View style={styles.botao}>
-                        <Pressable style={styles.button} >
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                             <Text style={styles.text}>Criar</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                         <Text style={styles.signupText}>
-                            Já tem uma conta? <Text style={styles.signupLink}>Entrar</Text>
+                            Já tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>Entrar</Text>
                         </Text>
                     </View>
                 </View>
@@ -99,6 +105,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         alignItems: 'center',
         elevation: 3,
+        marginBottom: 20,
     },
     text: {
         fontSize: 16,
@@ -114,6 +121,7 @@ const styles = StyleSheet.create({
     signupLink: {
         color: 'red',
         fontWeight: 'bold',
+
     },
     nome: {
         width: '100%'
@@ -130,17 +138,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderTopWidth:30,
-        borderColor:'transparent',
+        borderTopWidth: 30,
+        borderColor: 'transparent',
         // top: 0,
         width: '100%',
         // gap:10
     },
-    forms:{
-        borderBottomWidth:50,
-        borderColor:'transparent'
+    forms: {
+        borderBottomWidth: 50,
+        borderColor: 'transparent'
     },
-    nada:{
-        color:'transparent'
+    nada: {
+        color: 'transparent'
     }
 });
