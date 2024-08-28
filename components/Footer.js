@@ -31,12 +31,11 @@ export default function Footer() {
 
 const styles = StyleSheet.create({
     footer: {
-        padding: 15,
+        padding: 22,
         backgroundColor: 'darkred',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        borderTopWidth: 1,
-        borderTopColor: '#ddd',
+        gap: 50
     },
 });
