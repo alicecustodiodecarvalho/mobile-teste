@@ -1,6 +1,7 @@
 import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'react-native';
 
 export default function Login() {
 
@@ -15,7 +16,10 @@ export default function Login() {
                     <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
                         <MaterialIcons name="keyboard-backspace" size={24} color="black" />
                     </TouchableOpacity>
-                    <Text style={styles.title}>CarTech</Text>
+                    <Image
+                        style={styles.logo}
+                        source={require('../assets/images/logo.png')}
+                    />
                     <Text style={styles.login}>Login</Text>
                     <TextInput
                         style={styles.input}
@@ -51,11 +55,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#000',
-        marginBottom: 170,
+    logo: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
+        marginBottom: 100,
+
     },
     login: {
         fontSize: 26,
