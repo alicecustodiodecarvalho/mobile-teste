@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Image } from 'expo-image';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Header() {
   return (
@@ -12,7 +11,10 @@ export default function Header() {
           source={require('../assets/images/avatar-hidan.jpg')}
         />
       </View>
-      <Ionicons name="car-sport-outline" size={24} color="white" />
+      <Image
+        style={styles.logo}
+        source={require('../assets/images/logo.png')}
+      />
     </View>
   );
 }
@@ -49,5 +51,9 @@ const styles = StyleSheet.create({
   },
   menu: {
     padding: 10
+  },
+  logo:{
+    width:90,
+    height:40,
   }
 });

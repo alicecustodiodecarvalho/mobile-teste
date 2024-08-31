@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet, Pressable  } from "react-native";
-import { Link } from 'expo-router';
+import { View, Text, StyleSheet, TouchableOpacity  } from "react-native";
 
 
 export default function CardRegra() {
@@ -7,11 +6,9 @@ export default function CardRegra() {
     return (
         <View style={styles.comp}>
             <Text style={styles.font}> Descubra as regras para postar um carro em nosso App! </Text>
-            {/* <Link href='../pages/Login.js'> */}
-            <Pressable style={styles.button} >
+            <TouchableOpacity style={styles.button} >
                 <Text style={styles.text}>Regras</Text>
-            </Pressable>
-            {/* </Link> */}
+            </TouchableOpacity>
         </View>
     )
 }
@@ -39,13 +36,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 20,
         elevation: 3,
-        backgroundColor: 'darkred',
+        backgroundColor: 'red',
     },
     text: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'gray',
+        color: 'white',
     },
 })

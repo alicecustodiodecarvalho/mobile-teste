@@ -5,7 +5,7 @@ import CardMeuVeiculo from '../components/CardMeuVeiculo';
 export default function MeusVeiculos() {
     return (
         <View style={styles.container}>
-            <NavbarPadrao />
+            <NavbarPadrao texto="Meus Anúncios" />
             <View style={styles.scro}>
 
             <ScrollView >

@@ -9,7 +9,8 @@ export default function DescricaoCarro() {
 
     return (
         <View style={styles.container}>
-            <NavbarPadrao />
+            
+            <NavbarPadrao texto="Vender Carro" />
 
             <ScrollView contentContainerStyle={styles.content}>
                 <Text style={styles.title}>Segunda Etapa</Text>
