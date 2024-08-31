@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import NavbarPadrao from '../components/NavbarPadrao';
+import NavbarPadrao from '../components/NavbarPadrao'
 import { useNavigation } from '@react-navigation/native';
 
 export default function LocalizacaoCarro() {
@@ -19,24 +19,23 @@ export default function LocalizacaoCarro() {
         <View style={styles.formContainer}>
           <View>
 
-            <TextInput style={styles.input} placeholder="CEP" />
-            <View style={styles.row}>
-              <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Cidade" />
-              <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Estado" />
-            </View>
-            <View style={styles.row}>
-              <TextInput style={[styles.input, styles.lograd]} placeholder="Logradouro" />
-              <TextInput style={[styles.input, styles.num]} placeholder="Número" />
-            </View>
-            <TextInput style={styles.input} placeholder="Complemento" />
+          <TextInput style={styles.input} placeholder="CEP" />
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Cidade" />
+            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Estado" />
+          </View>
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.lograd]} placeholder="Logradouro" />
+            <TextInput style={[styles.input, styles.num]} placeholder="Número" />
+          </View>
+          <TextInput style={styles.input} placeholder="Complemento" />
           </View>
 
-          <Pressable style={styles.proxButton}>
+          <TouchableOpacity style={styles.proxButton}>
             <Text style={styles.buttonText}>Próxima Etapa</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
-
     </View>
   );
 };
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent:'space-between'
   },
   row: {
     flexDirection: 'row',
