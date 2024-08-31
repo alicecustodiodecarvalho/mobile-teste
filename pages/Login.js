@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         resizeMode: 'contain',
-        marginBottom: 100,
+        marginBottom: 160,
 
     },
     login: {
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     signupText: {
         color: '#333',
         fontSize: 14,
+        marginBottom: 100,
     },
     signupLink: {
         color: 'red',
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     },
     voltar: {
         position: 'absolute',
-        top: -60,
+        top: 30,
         left: 1
     }
 });
