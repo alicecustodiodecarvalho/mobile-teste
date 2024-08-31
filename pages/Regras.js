@@ -1,6 +1,5 @@
 import { Feather } from '@expo/vector-icons';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import Footer from '../components/Footer'
 import NavbarPadrao from '../components/NavbarPadrao'
 
 export default function Regras() {
@@ -72,8 +71,6 @@ export default function Regras() {
           </Text>
         </View>
       </ScrollView>
-
-      <Footer/>
     </View>
   );
 }

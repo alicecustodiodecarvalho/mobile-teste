@@ -31,7 +31,7 @@ export default function LocalizacaoCarro() {
           <TextInput style={styles.input} placeholder="Complemento" />
           </View>
 
-          <TouchableOpacity style={styles.proxButton}>
+          <TouchableOpacity style={styles.proxButton} onPress={() => navigation.navigate('DescricaoCarro')}>
             <Text style={styles.buttonText}>Próxima Etapa</Text>
           </TouchableOpacity>
         </View>

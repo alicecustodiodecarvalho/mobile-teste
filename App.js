@@ -11,6 +11,7 @@ import DescricaoCarro from './pages/DescricaoCarro';
 import DescricaoCarro2 from './pages/DescricaoCarro2';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
+import Regras from './pages/Regras';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +62,11 @@ export default function App() {
         <Stack.Screen 
           name="DescricaoCarro2" 
           component={DescricaoCarro2} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="Regras" 
+          component={Regras} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
         />
       </Stack.Navigator>
