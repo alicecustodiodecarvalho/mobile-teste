@@ -12,6 +12,10 @@ import DescricaoCarro2 from './pages/DescricaoCarro2';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Regras from './pages/Regras';
+import DetalhesAnuncio from './pages/DetalhesAnuncio';
+import EnviarProposta from './pages/EnviarProposta';
+import AtualizarDadosUser from './pages/AtualizarDadosUser';
+import AtualizarAnuncio from './pages/AtualizarAnuncio';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +71,26 @@ export default function App() {
         <Stack.Screen 
           name="Regras" 
           component={Regras} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="Anuncio" 
+          component={DetalhesAnuncio} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="Enviar" 
+          component={EnviarProposta} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="AtualizarAnuncio" 
+          component={AtualizarAnuncio} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+        />
+        <Stack.Screen 
+          name="AtualizarDados" 
+          component={AtualizarDadosUser} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
         />
       </Stack.Navigator>

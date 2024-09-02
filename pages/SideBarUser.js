@@ -18,8 +18,12 @@ export default function SideBarUser() {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.textContainer}>
+            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarDados')}>
                 <Text style={styles.Text}>Atualizar Dados da Conta</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarAnuncio')}>
+                <Text style={styles.Text}>Atualizar Dados dos Anúncios</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.textContainer}>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function NavbarDetalhes(texto) {
+export default function NavbarDetalhes({texto}) {
 
   const navigation = useNavigation();
 

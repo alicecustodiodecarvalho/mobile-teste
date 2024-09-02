@@ -20,7 +20,7 @@ export default function CardMeuVeiculo() {
                     <Text style={styles.preco}>R$ 300.000,00</Text>
                     <Text style={styles.adicionais}>Ler Detalhes...</Text>
                     <TouchableOpacity style={styles.button} >
-                        <Text style={styles.text}>Atualizar dados do veiculos</Text>
+                        <Text style={styles.text}>Atualizar dados do Anúncio</Text>
                     </TouchableOpacity>
 
 
