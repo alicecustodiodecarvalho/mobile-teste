@@ -10,6 +10,7 @@ export default function Home() {
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <Content />
             </ScrollView>
+            
         </View>
     );
 }

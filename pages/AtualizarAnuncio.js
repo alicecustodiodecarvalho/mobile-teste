@@ -1,41 +1,64 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao'
 import { useNavigation } from '@react-navigation/native';
 
-export default function LocalizacaoCarro() {
+export default function AtualizarDadosCarro() {
 
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <NavbarPadrao texto="Vender Carro" />
-      <View style={styles.container2}>
+      <NavbarPadrao texto="Atualizar Meus Anúncios" />
+    <View style={styles.container2}>
+      <ScrollView style={styles.formContainer}>
+        <TextInput style={styles.input} placeholder="CEP" />
 
-        <View style={styles.headerContainer}>
-          <Text style={styles.primeira}>Primeira Etapa</Text>
-          <Text style={styles.localiza}>Onde se localiza o Carro?</Text>
+        <View style={styles.row}>
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Cidade" />
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Estado" />
         </View>
 
-        <View style={styles.formContainer}>
-          <View>
-
-          <TextInput style={styles.input} placeholder="CEP" />
-          <View style={styles.row}>
-            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Cidade" />
-            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Estado" />
-          </View>
-          <View style={styles.row}>
-            <TextInput style={[styles.input, styles.lograd]} placeholder="Logradouro" />
-            <TextInput style={[styles.input, styles.num]} placeholder="Número" />
-          </View>
-          <TextInput style={styles.input} placeholder="Complemento" />
-          </View>
-
-          <TouchableOpacity style={styles.proxButton} onPress={() => navigation.navigate('DescricaoCarro')}>
-            <Text style={styles.buttonText}>Próxima Etapa</Text>
-          </TouchableOpacity>
+        <View style={styles.row}>
+          <TextInput style={[styles.input, styles.largeInput]} placeholder="Logradouro" />
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Número" />
         </View>
-      </View>
+
+        <TextInput style={styles.input} placeholder="Complemento" />
+
+        <Text style={styles.sectionTitle}>Fotos</Text>
+        <View style={styles.imageRow}>
+        </View>
+
+        <Text style={styles.sectionTitle}>Digite Informações do Carro</Text>
+
+        <TextInput style={styles.input} placeholder="Marca" />
+        <TextInput style={styles.input} placeholder="Modelo" />
+        <TextInput style={styles.input} placeholder="Informações do carro" />
+        <TextInput style={styles.input} placeholder="Valor" />
+
+        <View style={styles.row}>
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Fabricação" />
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Câmbio" />
+        </View>
+
+        <View style={styles.row}>
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Modelo" />
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
+        </View>
+
+        <View style={styles.row}>
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Km" />
+          <TextInput style={[styles.input, styles.smallInput]} placeholder="Combustível" />
+        </View>
+
+        <TextInput style={styles.input} placeholder="Cor" />
+        <TextInput style={[styles.input, styles.description]} placeholder="Descrição do Veículo" multiline />
+
+        <TouchableOpacity style={styles.confirmButton}>
+          <Text style={styles.confirmButtonText}>Confirmar</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
     </View>
   );
 };
@@ -44,64 +67,69 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    position: 'relative'
   },
   container2: {
     flex: 1,
-    padding: 20,
-    position: 'relative'
+    padding: 20
   },
-  headerContainer: {
-    marginBottom: 30,
-  },
-  primeira: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingTop: 80
-  },
-  localiza: {
+  backButton: {
     fontSize: 16,
-    textAlign: 'left',
-    fontWeight: 'bold',
-    paddingTop: 50,
-    color: 'red'
+    color: '#000',
+    marginBottom: 10,
   },
   formContainer: {
     flex: 1,
-    justifyContent:'space-between'
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   input: {
     height: 40,
     borderColor: '#000',
     borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 15,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
-  cidadeEstado: {
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  smallInput: {
     width: '48%',
   },
-  lograd: {
-    width: '70%',
+  largeInput: {
+    width: '48%',
   },
-  num: {
-    width: '28%',
+  description: {
+    height: 80,
   },
-  proxButton: {
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  imageRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  confirmButton: {
     backgroundColor: '#ff0000',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 20,
   },
-  buttonText: {
+  confirmButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
 });

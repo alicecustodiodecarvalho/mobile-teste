@@ -71,29 +71,30 @@ export default function App() {
         <Stack.Screen 
           name="Regras" 
           component={Regras} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+          options={{ headerShown: false }}// Remove o título e a barra de navegação padrão
         />
         <Stack.Screen 
           name="Anuncio" 
           component={DetalhesAnuncio} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
+          />
         <Stack.Screen 
           name="Enviar" 
           component={EnviarProposta} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
+          />
         <Stack.Screen 
           name="AtualizarAnuncio" 
           component={AtualizarAnuncio} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
+          />
         <Stack.Screen 
           name="AtualizarDados" 
           component={AtualizarDadosUser} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
+          />
       </Stack.Navigator>
+
       <Footer/>
     </NavigationContainer>
   );

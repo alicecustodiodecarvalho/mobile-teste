@@ -36,8 +36,8 @@ export default function LocalizacaoCarro() {
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.proxButton} onPress={() => navigation.navigate('DescricaoCarro')}>
-                        <Text style={styles.buttonText}>Confrimar</Text>
+                    <TouchableOpacity style={styles.proxButton} >
+                        <Text style={styles.buttonText}>Confirmar</Text>
                     </TouchableOpacity>
                 </View>
             </View>

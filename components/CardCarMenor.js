@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,7 +7,7 @@ export default function CardCarMenor() {
     const navigation = useNavigation();
 
     return (
-        <Pressable style={styles.pad} onPress={() => navigation.navigate('Anuncio')}>
+        <TouchableOpacity style={styles.pad} onPress={() => navigation.navigate('Anuncio')}>
             <View style={styles.card}>
             <Image
                 style={styles.image}
@@ -36,7 +36,7 @@ export default function CardCarMenor() {
             
             </View>
         </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
