@@ -20,21 +20,31 @@ export default function Login() {
                         style={styles.logo}
                         source={require('../assets/images/logo.png')}
                     />
-                    <Text style={styles.login}>Login</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Email"
-                    />
-                    <TextInput
-                        style={[styles.input, { marginBottom: 60 }]}
-                        placeholder="Senha"
-                    />
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.text}>Entrar</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.signupText}>
-                        Não tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Registro')}>Criar conta</Text>
-                    </Text>
+                    <View style={styles.forms}>
+
+                        <View style={styles.inputs}>
+                        <Text style={styles.login}>Login</Text>
+
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Email"
+                            />
+                            <TextInput
+                                style={[styles.input, { marginBottom: 60 }]}
+                                placeholder="Senha"
+                                
+                            />
+                        </View>
+                        <View style={styles.botoes}>
+
+                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+                                <Text style={styles.text}>Entrar</Text>
+                            </TouchableOpacity>
+                            <Text style={styles.signupText}>
+                                Não tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Registro')}>Criar conta</Text>
+                            </Text>
+                        </View>
+                    </View>
                 </View>
             </ImageBackground>
         </View>
@@ -105,7 +115,20 @@ const styles = StyleSheet.create({
     },
     voltar: {
         position: 'absolute',
-        top: 30,
+        top: 40,
         left: 1
+    },
+    forms: {
+        gap: 50,
+        width: "100%",
+        alignItems: "center"
+    },
+    inputs: {
+        width: "100%",
+        alignItems:'center'
+    },
+    botoes:{
+        width:"100%",
+        alignItems:"center"
     }
-});
+})

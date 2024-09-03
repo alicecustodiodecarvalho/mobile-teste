@@ -27,7 +27,7 @@ export default function App() {
   const navigationRef = useNavigationContainerRef();
   const [currentRoute, setCurrentRoute] = useState();
 
-  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'SideBarUser', 'Anuncio', 'DetalhesVendedor', 'Comprar'];
+  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar'];
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
