@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         resizeMode: 'contain',
-        marginBottom: 160,
+        marginBottom: 190,
 
     },
     login: {

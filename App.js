@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState, useEffect } from 'react';
 import CatalogoCarros from './pages/CatalogoCarros';
 import Home from './pages/Home';
 import Footer from './components/Footer';
@@ -23,97 +24,52 @@ import CompraCarro from './pages/CompraCarro';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const navigationRef = useNavigationContainerRef();
+  const [currentRoute, setCurrentRoute] = useState();
+
+  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'SideBarUser', 'Anuncio', 'DetalhesVendedor', 'Comprar'];
+
+  useEffect(() => {
+    const unsubscribe = navigationRef.addListener('state', () => {
+      const route = navigationRef.getCurrentRoute();
+      setCurrentRoute(route?.name);
+    });
+
+    return unsubscribe;
+  }, [navigationRef]);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen 
-          name="Registro" 
-          component={Registro} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="Home" 
-          component={Home} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="Catalogo" 
-          component={CatalogoCarros} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="LocalizacaoCarro" 
-          component={LocalizacaoCarro} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="SideBarUser" 
-          component={SideBarUser} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="MeusVeiculos" 
-          component={MeusVeiculos} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="DescricaoCarro" 
-          component={DescricaoCarro} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="DescricaoCarro2" 
-          component={DescricaoCarro2} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="Regras" 
-          component={Regras} 
-          options={{ headerShown: false }}// Remove o título e a barra de navegação padrão
-        />
-        <Stack.Screen 
-          name="Anuncio" 
-          component={DetalhesAnuncio} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="Enviar" 
-          component={EnviarProposta} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="AtualizarAnuncio" 
-          component={AtualizarAnuncio} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="AtualizarDados" 
-          component={AtualizarDadosUser} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="SobreNos" 
-          component={SobreNos} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="DetalhesVendedor" 
-          component={DetalhesVendedor} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
-        <Stack.Screen 
-          name="Comprar" 
-          component={CompraCarro} 
-          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
-          />
+    <NavigationContainer ref={navigationRef} onReady={() => {
+      const route = navigationRef.getCurrentRoute();
+      setCurrentRoute(route?.name);
+    }}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={({ route }) => ({
+          headerShown: false, // Esconde o cabeçalho em todas as telas
+          // Adicione qualquer outra configuração global aqui
+        })}
+      >
+        <Stack.Screen name="Registro" component={Registro} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Catalogo" component={CatalogoCarros} />
+        <Stack.Screen name="LocalizacaoCarro" component={LocalizacaoCarro} />
+        <Stack.Screen name="SideBarUser" component={SideBarUser} />
+        <Stack.Screen name="MeusVeiculos" component={MeusVeiculos} />
+        <Stack.Screen name="DescricaoCarro" component={DescricaoCarro} />
+        <Stack.Screen name="DescricaoCarro2" component={DescricaoCarro2} />
+        <Stack.Screen name="Regras" component={Regras} />
+        <Stack.Screen name="Anuncio" component={DetalhesAnuncio} />
+        <Stack.Screen name="Enviar" component={EnviarProposta} />
+        <Stack.Screen name="AtualizarAnuncio" component={AtualizarAnuncio} />
+        <Stack.Screen name="AtualizarDados" component={AtualizarDadosUser} />
+        <Stack.Screen name="SobreNos" component={SobreNos} />
+        <Stack.Screen name="DetalhesVendedor" component={DetalhesVendedor} />
+        <Stack.Screen name="Comprar" component={CompraCarro} />
       </Stack.Navigator>
 
-      <Footer/>
+      {/* Renderizar o Footer condicionalmente */}
+      {!noFooterRoutes.includes(currentRoute) && <Footer />}
+
     </NavigationContainer>
   );
 }
