@@ -9,17 +9,14 @@ export default function SalesFooter() {
 
   return (
     <View style={styles.footerContainer}>
-      {}
-      <TouchableOpacity style={styles.comprarButton}>
+      <TouchableOpacity style={styles.comprarButton} onPress={() => navigation.navigate('Comprar')}>
         <Text style={styles.buttonText}>Comprar</Text>
       </TouchableOpacity>
 
-      {}
       <TouchableOpacity style={styles.cllButton}>
         <Ionicons name="call" size={24} color="white" />
       </TouchableOpacity>
 
-      {}
       <TouchableOpacity style={styles.messageButton} onPress={() => navigation.navigate('Enviar')}>
         <Text style={styles.buttonText}>Enviar Mensagem</Text>
       </TouchableOpacity>
