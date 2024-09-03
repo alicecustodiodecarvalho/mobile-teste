@@ -1,4 +1,4 @@
-//quando coloco esse aqui, na web da certo, porém no celular o footer cobre uma partezinha da página
+//para não ficar cobrindo a página é so dar paddingBottom (content e etc)
 
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
