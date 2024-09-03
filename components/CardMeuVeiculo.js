@@ -1,7 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Image } from 'expo-image'
+import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CardMeuVeiculo() {
+
+  const navigation = useNavigation();
+
     return (
         <View style={styles.pad}>
             <View style={styles.card}>
@@ -19,7 +23,7 @@ export default function CardMeuVeiculo() {
 
                     <Text style={styles.preco}>R$ 300.000,00</Text>
                     <Text style={styles.adicionais}>Ler Detalhes...</Text>
-                    <TouchableOpacity style={styles.button} >
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AtualizarAnuncio')}>
                         <Text style={styles.text}>Atualizar dados do Anúncio</Text>
                     </TouchableOpacity>
 

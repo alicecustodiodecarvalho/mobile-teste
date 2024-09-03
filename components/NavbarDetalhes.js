@@ -17,11 +17,11 @@ export default function NavbarDetalhes({texto}) {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={[styles.navItem]}>
+        <TouchableOpacity style={[styles.navItem]} onPress={() => navigation.navigate('Anuncio')}>
           <Text style={styles.navText}>Veículo</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.navItem]}>
+        <TouchableOpacity style={[styles.navItem]} onPress={() => navigation.navigate('DetalhesVendedor')}>
           <Text style={styles.navText}>Vendedor</Text>
         </TouchableOpacity>
       </View>

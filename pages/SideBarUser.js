@@ -26,7 +26,7 @@ export default function SideBarUser() {
                 <Text style={styles.Text}>Atualizar Dados dos Anúncios</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.textContainer}>
+            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('SobreNos')}>
                 <Text style={styles.Text}>Sobre nós</Text>
             </TouchableOpacity>
 

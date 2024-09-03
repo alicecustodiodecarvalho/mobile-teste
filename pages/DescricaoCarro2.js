@@ -1,19 +1,29 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function DescricaoCarro2 () {
+export default function DescricaoCarro2() {
 
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
             <NavbarPadrao texto="Vender Carro" />
-            
+
             <ScrollView contentContainerStyle={styles.content}>
                 <Text style={styles.title}>Terceira Etapa</Text>
                 <Text style={styles.subtitle}>Adicione Fotos do Carro</Text>
+
+                <View style={styles.imageRow}>
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                    <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+                </View>
 
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={styles.buttonText}>Publicar Carro</Text>
@@ -41,8 +51,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: 'red',
-        paddingTop:30
+        color: 'black',
+        paddingTop: 30
     },
     button: {
         backgroundColor: '#ff0000',
@@ -55,5 +65,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    imageRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
     },
 });

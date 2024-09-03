@@ -16,6 +16,8 @@ import DetalhesAnuncio from './pages/DetalhesAnuncio';
 import EnviarProposta from './pages/EnviarProposta';
 import AtualizarDadosUser from './pages/AtualizarDadosUser';
 import AtualizarAnuncio from './pages/AtualizarAnuncio';
+import SobreNos from './pages/SobreNos';
+import DetalhesVendedor from './pages/DetalhesVendedor';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +93,16 @@ export default function App() {
         <Stack.Screen 
           name="AtualizarDados" 
           component={AtualizarDadosUser} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+          />
+        <Stack.Screen 
+          name="SobreNos" 
+          component={SobreNos} 
+          options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
+          />
+        <Stack.Screen 
+          name="DetalhesVendedor" 
+          component={DetalhesVendedor} 
           options={{ headerShown: false }} // Remove o título e a barra de navegação padrão
           />
       </Stack.Navigator>

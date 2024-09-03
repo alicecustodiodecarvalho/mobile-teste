@@ -1,5 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import NavbarPadrao from '../components/NavbarPadrao'
+import NavbarPadrao from '../components/NavbarPadrao';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function AtualizarDadosCarro() {
@@ -9,56 +10,64 @@ export default function AtualizarDadosCarro() {
   return (
     <View style={styles.container}>
       <NavbarPadrao texto="Atualizar Meus Anúncios" />
-    <View style={styles.container2}>
-      <ScrollView style={styles.formContainer}>
-        <TextInput style={styles.input} placeholder="CEP" />
+      <View style={styles.container2}>
+        <ScrollView style={styles.formContainer}>
+          <Text style={styles.sectionTitle}>Onde se Localiza o Carro?</Text>
 
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Cidade" />
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Estado" />
-        </View>
+          <TextInput style={styles.input} placeholder="CEP" />
 
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.largeInput]} placeholder="Logradouro" />
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Número" />
-        </View>
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Cidade" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Estado" />
+          </View>
 
-        <TextInput style={styles.input} placeholder="Complemento" />
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.largeInput]} placeholder="Logradouro" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Número" />
+          </View>
 
-        <Text style={styles.sectionTitle}>Fotos</Text>
-        <View style={styles.imageRow}>
-        </View>
+          <TextInput style={styles.input} placeholder="Complemento" />
 
-        <Text style={styles.sectionTitle}>Digite Informações do Carro</Text>
+          <Text style={styles.sectionTitle}>Fotos</Text>
+          <View style={styles.imageRow}>
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
+          </View>
 
-        <TextInput style={styles.input} placeholder="Marca" />
-        <TextInput style={styles.input} placeholder="Modelo" />
-        <TextInput style={styles.input} placeholder="Informações do carro" />
-        <TextInput style={styles.input} placeholder="Valor" />
+          <Text style={styles.sectionTitle}>Digite Informações do Carro</Text>
 
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Fabricação" />
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Câmbio" />
-        </View>
+          <TextInput style={styles.input} placeholder="Marca" />
+          <TextInput style={styles.input} placeholder="Modelo" />
+          <TextInput style={styles.input} placeholder="Informações do carro" />
+          <TextInput style={styles.input} placeholder="Valor" />
 
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Modelo" />
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
-        </View>
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Fabricação" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Câmbio" />
+          </View>
 
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Km" />
-          <TextInput style={[styles.input, styles.smallInput]} placeholder="Combustível" />
-        </View>
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Modelo" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
+          </View>
 
-        <TextInput style={styles.input} placeholder="Cor" />
-        <TextInput style={[styles.input, styles.description]} placeholder="Descrição do Veículo" multiline />
+          <View style={styles.row}>
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Km" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Combustível" />
+          </View>
 
-        <TouchableOpacity style={styles.confirmButton}>
-          <Text style={styles.confirmButtonText}>Confirmar</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+          <TextInput style={styles.input} placeholder="Cor" />
+          <TextInput style={[styles.input, styles.description]} placeholder="Descrição do Veículo" multiline />
+
+          <TouchableOpacity style={styles.confirmButton}>
+            <Text style={styles.confirmButtonText}>Confirmar</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'red',
+    color: 'black',
     marginTop: 20,
     marginBottom: 10,
   },
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 60,
   },
   confirmButtonText: {
     color: '#fff',

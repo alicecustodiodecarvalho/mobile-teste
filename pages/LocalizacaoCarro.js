@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import NavbarPadrao from '../components/NavbarPadrao'
+import NavbarPadrao from '../components/NavbarPadrao';
 import { useNavigation } from '@react-navigation/native';
 
 export default function LocalizacaoCarro() {
@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
   primeira: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    paddingTop: 80
+    textAlign: 'center'
   },
   localiza: {
     fontSize: 16,
