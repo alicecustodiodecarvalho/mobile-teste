@@ -1,6 +1,7 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao'
 import { useNavigation } from '@react-navigation/native';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function LocalizacaoCarro() {
 
@@ -10,6 +11,18 @@ export default function LocalizacaoCarro() {
         <View style={styles.container}>
             <NavbarPadrao texto="Atualizar Meus Dados" />
             <View style={styles.container2}>
+                <View style={styles.image}>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../assets/images/avatar-hidan.jpg')}
+                            style={styles.perfilImage}
+                        />
+                        <Text >
+                        <Feather name="edit-2" size={24} color="black" />
+                        Editar
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
                 <View style={styles.headerContainer}>
                     {/* <Text style={styles.primeira}>Primeira Etapa</Text> */}
@@ -108,5 +121,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    perfilImage: {
+        width: 80,
+        height: 80,
+        borderRadius: 40
+    },
+    image: {
+        alignItems: 'center'
     }
 });

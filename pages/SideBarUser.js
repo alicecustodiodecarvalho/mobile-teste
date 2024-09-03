@@ -21,9 +21,9 @@ export default function SideBarUser() {
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarDados')}>
                 <Text style={styles.Text}>Atualizar Dados da Conta</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarAnuncio')}>
-                <Text style={styles.Text}>Atualizar Dados dos Anúncios</Text>
+            
+            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('Regras')}>
+                <Text style={styles.Text}>Minhas Compras</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('SobreNos')}>
@@ -33,6 +33,7 @@ export default function SideBarUser() {
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('Regras')}>
                 <Text style={styles.Text}>Regras</Text>
             </TouchableOpacity>
+
         </View>
     );
 };
