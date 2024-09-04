@@ -13,18 +13,11 @@ export default function SideBarUser() {
                     style={styles.perfilImage}
                 />
                 <View style={styles.usuario}>
-                    <Text style={styles.ola}>Olá!</Text>
-                    <Text style={styles.username}>Usuário</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SideBarUser')}>
+                        <Text style={styles.text}>Entrar</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-
-            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarDados')}>
-                <Text style={styles.Text}>Atualizar Dados da Conta</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.textContainer} >
-                <Text style={styles.Text}>Minhas Compras</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('SobreNos')}>
                 <Text style={styles.Text}>Sobre nós</Text>
@@ -46,7 +39,8 @@ const styles = StyleSheet.create({
     perfilContainer: {
         alignItems: 'center',
         marginTop: 40,
-        marginBottom: 20
+        marginBottom: 20,
+        gap:10
     },
     perfilImage: {
         width: 80,
@@ -77,5 +71,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 5,
-    }
+    },
+    button: {
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 8,
+        elevation: 3,
+        backgroundColor: 'red',
+    },
+    text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+    },
 });

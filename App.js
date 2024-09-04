@@ -20,6 +20,7 @@ import AtualizarAnuncio from './pages/AtualizarAnuncio';
 import SobreNos from './pages/SobreNos';
 import DetalhesVendedor from './pages/DetalhesVendedor';
 import CompraCarro from './pages/CompraCarro';
+import Sidebar from './pages/Sidebar';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,7 @@ export default function App() {
         <Stack.Screen name="SobreNos" component={SobreNos} />
         <Stack.Screen name="DetalhesVendedor" component={DetalhesVendedor} />
         <Stack.Screen name="Comprar" component={CompraCarro} />
+        <Stack.Screen name="Sidebar" component={Sidebar} />
       </Stack.Navigator>
 
       {/* Renderizar o Footer condicionalmente */}
