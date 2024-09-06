@@ -25,7 +25,7 @@ export default function Footer() {
             <TouchableOpacity onPress={() => navigation.navigate('MeusVeiculos')}>
                 <Ionicons name="car-sport-outline" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SideBarUser')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Sidebar')}>
                 <Feather name="menu" size={25} color="white" />
             </TouchableOpacity>
         </View>

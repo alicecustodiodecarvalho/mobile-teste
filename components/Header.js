@@ -21,13 +21,13 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#000000cc',
+    backgroundColor: 'white',
     alignItems: 'center',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     padding: 18,
     paddingBottom: 10,
-    paddingTop: 35,
+    paddingTop: 40,
     position: 'absolute',
     top: 0, // Ajusta a posição para o topo da tela
     right: 0,
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: '600',
     fontSize: 18,
-    color: 'white'
+    color: 'black'
   },
   menu: {
     padding: 10
   },
   logo:{
-    width:90,
-    height:40,
+    width:110,
+    height:50,
   }
 });

@@ -22,7 +22,7 @@ export default function SideBarUser() {
                 <Text style={styles.Text}>Atualizar Dados da Conta</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.textContainer} >
+            <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('Compras')}>
                 <Text style={styles.Text}>Minhas Compras</Text>
             </TouchableOpacity>
 

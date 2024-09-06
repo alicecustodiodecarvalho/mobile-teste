@@ -27,21 +27,22 @@ export default function CarDetailsPage() {
       <NavbarDetalhes texto="Anúncio" />
 
       <View style={styles.imageGallery}>
+
         <ScrollView horizontal pagingEnabled>
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
+            <Image
+              source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
+              style={styles.carImage}
+            />
+            <Image
+              source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
+              style={styles.carImage}
+            />
+            <Image
+              source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
+              style={styles.carImage}
+            />
         </ScrollView>
-      </View>
+      </View >
 
       <View style={styles.detailsContainer}>
         <View style={styles.detailItem}>
@@ -95,9 +96,9 @@ export default function CarDetailsPage() {
           />
         </View>
       </View>
-      <FooterVendas/>
-    </ScrollView>
-    
+      <FooterVendas />
+    </ScrollView >
+
   );
 }
 
@@ -108,10 +109,10 @@ const styles = StyleSheet.create({
   },
   imageGallery: {
     height: 250,
-    marginBottom: 16,
+    marginBottom: 16
   },
   carImage: {
-    width: 350,
+    width: 380,
     height: 250,
   },
   detailsContainer: {
@@ -145,6 +146,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlignVertical: 'top',
     backgroundColor: '#f9f9f9',
-  },
+  }
 });
 
