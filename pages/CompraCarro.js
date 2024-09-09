@@ -3,18 +3,34 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
 import CardCarPagamento from '../components/CardCarPagamento';
-import CustomModal from './Modal'; // Certifique-se de que o caminho está correto
+import CustomModal from '../components/ModalCartao';
+import PixModal from '../components/ModalPix';
+import BoletoModal from '../components/ModalBoleto';
 
 export default function CompraCarro() {
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisiblepix, setModalVisiblePix] = useState(false);
+    const [modalVisibleBol, setModalVisibleBol] = useState(false);
+    const [modalVisibleCard, setModalVisibleCard] = useState(false);
 
-    const openModal = () => {
-        setModalVisible(true);
+    const openModalPix = () => {
+        setModalVisiblePix(true);
+    };
+    const openModalBol = () => {
+        setModalVisibleBol(true);
+    };
+    const openModalCard = () => {
+        setModalVisibleCard(true);
     };
 
-    const closeModal = () => {
-        setModalVisible(false);
+    const closeModalPix = () => {
+        setModalVisiblePix(false);
+    };
+    const closeModalBol = () => {
+        setModalVisibleBol(false);
+    };
+    const closeModalCard = () => {
+        setModalVisibleCard(false);
     };
 
     return (
@@ -25,11 +41,13 @@ export default function CompraCarro() {
                 <CardCarPagamento />
             </View>
             <View style={styles.pagamentos}>
-                <TouchableOpacity style={[styles.pag, styles.pix]}><Text style={styles.texto}>Pix</Text></TouchableOpacity>
-                <TouchableOpacity style={[styles.pag, styles.pix]}><Text style={styles.texto}>Boleto</Text></TouchableOpacity>
-                <TouchableOpacity style={[styles.pag, styles.cart]} onPress={openModal}><Text style={styles.texto}>Cartão de Crédito/Débito</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.pag, styles.pix]}  onPress={openModalPix}><Text style={styles.texto}>Pix</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.pag, styles.pix]}  onPress={openModalBol}><Text style={styles.texto}>Boleto</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.pag, styles.cart]} onPress={openModalCard}><Text style={styles.texto}>Cartão de Crédito/Débito</Text></TouchableOpacity>
             </View>
-            <CustomModal visible={modalVisible} onClose={closeModal} />
+            <CustomModal visible={modalVisibleCard} onClose={closeModalCard} />
+            <PixModal visible={modalVisiblepix} onClose={closeModalPix}/>
+            <BoletoModal visible={modalVisibleBol} onClose={closeModalBol}/>
         </View>
     );
 }

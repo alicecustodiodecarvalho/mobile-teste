@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const CustomModal = ({ visible, onClose }) => {
   const [cardNumber, setCardNumber] = useState('');
@@ -16,6 +17,9 @@ const CustomModal = ({ visible, onClose }) => {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
+          <View style={styles.close}>
+            <AntDesign name="close" size={24} color="black" onPress={onClose}/>
+          </View>
           <Text style={styles.title}>Informações do Cartão</Text>
           <TextInput
             style={styles.input}
@@ -47,7 +51,6 @@ const CustomModal = ({ visible, onClose }) => {
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
-          <Button title="Fechar Modal" onPress={onClose} />
         </View>
       </View>
     </Modal>
@@ -62,8 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: 300,
-    padding: 20,
+    width: '95%',
+    padding: 10,
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
@@ -86,6 +89,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 10
   },
   halfInput: {
     width: '48%',
@@ -101,6 +105,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  close: {
+    width: '100%'
+  }
 });
 
 export default CustomModal;
