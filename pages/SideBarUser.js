@@ -1,9 +1,21 @@
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import ExcluirModal from '../components/ModalExcluir';
 
 export default function SideBarUser() {
 
     const navigation = useNavigation();
+
+    const [modalVisibleExcluir, setModalVisibleExcluir] = useState(false);
+
+    const openModalExcluir = () => {
+        setModalVisibleExcluir(true);
+    };
+
+    const closeModalExcluir = () => {
+        setModalVisibleExcluir(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -21,7 +33,7 @@ export default function SideBarUser() {
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('AtualizarDados')}>
                 <Text style={styles.Text}>Atualizar Dados da Conta</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('Compras')}>
                 <Text style={styles.Text}>Minhas Compras</Text>
             </TouchableOpacity>
@@ -33,6 +45,13 @@ export default function SideBarUser() {
             <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate('Regras')}>
                 <Text style={styles.Text}>Regras</Text>
             </TouchableOpacity>
+
+            <View style={ styles.excluir}>
+                <TouchableOpacity style={styles.textContainer} onPress={openModalExcluir}>
+                    <Text style={styles.Textex}>Excluir minha conta</Text>
+                </TouchableOpacity>
+            </View>
+            <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir}/>
 
         </View>
     );
@@ -73,9 +92,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     usuario: {
-        flexDirection:'row',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 5,
+    },
+    excluir: {
+        justifyContent: 'flex-end',
+        flex:1,
+        paddingBottom:50
+    },
+    Textex:{
+        color:'red',
+        fontSize: 16,
+        fontWeight:'bold'
     }
 });

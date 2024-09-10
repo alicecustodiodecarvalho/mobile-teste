@@ -45,7 +45,7 @@ export default function App() {
       const route = navigationRef.getCurrentRoute();
       setCurrentRoute(route?.name);
     }}>
-      <Stack.Navigator initialRouteName="Comprar" screenOptions={({ route }) => ({
+      <Stack.Navigator initialRouteName="Registro" screenOptions={({ route }) => ({
           headerShown: false, // Esconde o cabeçalho em todas as telas
           // Adicione qualquer outra configuração global aqui
         })}
