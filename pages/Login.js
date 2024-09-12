@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
@@ -8,8 +8,10 @@ export default function Login() {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false); // Estado para o indicador de carregamento
 
     const handleLogin = async () => {
+        setLoading(true); // Ativa o loading ao iniciar o login
         try {
             const response = await fetch('https://pi3-backend-i9l3.onrender.com/auth/login', {
                 method: 'POST',
@@ -32,6 +34,8 @@ export default function Login() {
         } catch (error) {
             console.error('Error:', error);
             Alert.alert('Erro', 'Ocorreu um erro ao tentar fazer login.');
+        } finally {
+            setLoading(false); // Desativa o loading ao finalizar o login
         }
     };
 
@@ -68,9 +72,13 @@ export default function Login() {
                             />
                         </View>
                         <View style={styles.botoes}>
-                            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                                <Text style={styles.text}>Entrar</Text>
-                            </TouchableOpacity>
+                            {loading ? ( // Verifica se o estado de loading está ativo
+                                <ActivityIndicator size="large" color="red" />
+                            ) : (
+                                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                                    <Text style={styles.text}>Entrar</Text>
+                                </TouchableOpacity>
+                            )}
                             <Text style={styles.signupText}>
                                 Não tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Registro')}>Criar conta</Text>
                             </Text>

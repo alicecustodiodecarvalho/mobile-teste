@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, ActivityIndicator } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Image } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text'; // Instalar com: expo install react-native-masked-text
 import { useNavigation } from '@react-navigation/native';
 
-const Registro = ({ onRegister = () => {} }) => {
+const Registro = ({ onRegister = () => { } }) => {
     const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
@@ -15,6 +15,8 @@ const Registro = ({ onRegister = () => {} }) => {
     const [nascimento, setNascimento] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [loading, setLoading] = useState(false); // Estado para o indicador de carregamento
+
 
     const handleRegister = async () => {
         if (senha !== confirmarSenha) {
@@ -26,6 +28,8 @@ const Registro = ({ onRegister = () => {} }) => {
         const cpfSemFormatacao = cpf.replace(/\D/g, ''); // Remove pontos e traços
         const telSemFormatacao = telefone.replace(/\D/g, ''); // Remove parênteses e traços
         const nascimentoFormatado = nascimento.split('/').reverse().join('-'); // Formato aaaa-mm-dd
+
+        setLoading(true); // Ativa o loading ao iniciar o login
 
         try {
             const response = await fetch('https://pi3-backend-i9l3.onrender.com/usuarios', {
@@ -60,6 +64,8 @@ const Registro = ({ onRegister = () => {} }) => {
             }
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            setLoading(false); // Desativa o loading ao finalizar o login
         }
     };
 
@@ -144,9 +150,13 @@ const Registro = ({ onRegister = () => {} }) => {
                                 </View>
                             </View>
                             <View style={styles.botao}>
-                                <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                                    <Text style={styles.text}>Criar</Text>
-                                </TouchableOpacity>
+                                {loading ? ( // Verifica se o estado de loading está ativo
+                                    <ActivityIndicator size="large" color="red" />
+                                ) : (
+                                    <TouchableOpacity style={styles.button} onPress={handleRegister}>
+                                        <Text style={styles.text}>Criar</Text>
+                                    </TouchableOpacity>
+                                )}
                                 <Text style={styles.signupText}>
                                     Já tem uma conta? <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>Entrar</Text>
                                 </Text>
@@ -262,4 +272,3 @@ const styles = StyleSheet.create({
 });
 
 export default Registro;
- 
