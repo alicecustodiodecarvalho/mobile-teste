@@ -1,3 +1,12 @@
 npm install @react-navigation/native @react-navigation/native-stack
 
 npx expo install react-native-screens react-native-safe-area-context
+
+AsyncStorage 
+npm install @react-native-async-storage/async-storage
+
+barcode: 
+npm i -S react-native-svg react-native-barcode-svg
+
+qrcode: 
+npm i -S react-native-svg react-native-qrcode-svg

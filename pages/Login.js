@@ -3,6 +3,7 @@ import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, A
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
     const navigation = useNavigation();
@@ -26,6 +27,12 @@ export default function Login() {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log(data); // Verifique o que está sendo retornado
+                if (data.nome) { // Verifique se nome existe
+                    await AsyncStorage.setItem('nome', data.nome);
+                } else {
+                    console.warn('nome não encontrado no retorno da API');
+                }
                 navigation.navigate('Home');
             } else {
                 console.error('Falha ao fazer login', await response.text());

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExcluirModal from '../components/ModalExcluir';
 
 export default function SideBarUser() {
@@ -17,6 +18,18 @@ export default function SideBarUser() {
         setModalVisibleExcluir(false);
     };
 
+    const [nome, setNome] = useState('Usuário');
+
+    useEffect(() => {
+        const fetchNome = async () => {
+            const user = await AsyncStorage.getItem('nome');
+            if (user) {
+                setNome(user);
+            }
+        };
+        fetchNome();
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.perfilContainer}>
@@ -26,7 +39,7 @@ export default function SideBarUser() {
                 />
                 <View style={styles.usuario}>
                     <Text style={styles.ola}>Olá!</Text>
-                    <Text style={styles.username}>Usuário</Text>
+                    <Text style={styles.username}>{nome}</Text>
                 </View>
             </View>
 
@@ -46,12 +59,12 @@ export default function SideBarUser() {
                 <Text style={styles.Text}>Regras</Text>
             </TouchableOpacity>
 
-            <View style={ styles.excluir}>
+            <View style={styles.excluir}>
                 <TouchableOpacity style={styles.textContainer} onPress={openModalExcluir}>
                     <Text style={styles.Textex}>Excluir minha conta</Text>
                 </TouchableOpacity>
             </View>
-            <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir}/>
+            <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir} />
 
         </View>
     );
@@ -99,12 +112,12 @@ const styles = StyleSheet.create({
     },
     excluir: {
         justifyContent: 'flex-end',
-        flex:1,
-        paddingBottom:50
+        flex: 1,
+        paddingBottom: 50
     },
-    Textex:{
-        color:'red',
+    Textex: {
+        color: 'red',
         fontSize: 16,
-        fontWeight:'bold'
+        fontWeight: 'bold'
     }
 });
