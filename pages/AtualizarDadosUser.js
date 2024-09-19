@@ -9,6 +9,7 @@ import { TextInputMask } from 'react-native-masked-text';
 export default function AtualizarDadosUser() {
     const navigation = useNavigation();
 
+    const [id, setId] = useState('');
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [cpf, setCpf] = useState('');
@@ -21,19 +22,22 @@ export default function AtualizarDadosUser() {
     useEffect(() => {
         const loadUserData = async () => {
             try {
-                const storedNome = await AsyncStorage.getItem('nome');
-                const storedEmail = await AsyncStorage.getItem('email');
-                const storedCpf = await AsyncStorage.getItem('cpf');
-                const storedTelefone = await AsyncStorage.getItem('telefone');
-                const storedNascimento = await AsyncStorage.getItem('nascimento');
+                // Carregando dados do AsyncStorage
+                const storedId = await AsyncStorage.getItem('storedId');
+                const storedNome = await AsyncStorage.getItem('storedNome');
+                const storedEmail = await AsyncStorage.getItem('storedEmail');
+                const storedCpf = await AsyncStorage.getItem('storedCpf');
+                const storedTelefone = await AsyncStorage.getItem('storedTelefone');
+                const storedNascimento = await AsyncStorage.getItem('storedNascimento');
 
+                if (storedId) setId(storedId);
                 if (storedNome) setNome(storedNome);
                 if (storedEmail) setEmail(storedEmail);
                 if (storedCpf) setCpf(storedCpf);
                 if (storedTelefone) setTelefone(storedTelefone);
                 if (storedNascimento) setNascimento(storedNascimento);
             } catch (error) {
-                console.error('Error loading user data:', error);
+                console.error('Erro ao carregar os dados do usuário:', error);
             }
         };
 
@@ -53,7 +57,8 @@ export default function AtualizarDadosUser() {
         setLoading(true);
 
         try {
-            const response = await fetch('https://pi3-backend-i9l3.onrender.com/usuarios', {
+            // Atualizando dados no backend
+            const response = await fetch(`https://pi3-backend-i9l3.onrender.com/usuarios/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,11 +74,12 @@ export default function AtualizarDadosUser() {
             });
 
             if (response.ok) {
-                await AsyncStorage.setItem('nome', nome);
-                await AsyncStorage.setItem('email', email);
-                await AsyncStorage.setItem('cpf', cpfSemFormatacao);
-                await AsyncStorage.setItem('telefone', telSemFormatacao);
-                await AsyncStorage.setItem('nascimento', nascimentoFormatado);
+                // Atualizando dados no AsyncStorage
+                await AsyncStorage.setItem('storedNome', nome);
+                await AsyncStorage.setItem('storedEmail', email);
+                await AsyncStorage.setItem('storedCpf', cpfSemFormatacao);
+                await AsyncStorage.setItem('storedTelefone', telSemFormatacao);
+                await AsyncStorage.setItem('storedNascimento', nascimentoFormatado);
 
                 Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
                 navigation.navigate('Home');
@@ -82,7 +88,7 @@ export default function AtualizarDadosUser() {
                 Alert.alert('Erro', `Falha ao atualizar dados: ${errorText}`);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Erro:', error);
             Alert.alert('Erro', 'Ocorreu um erro ao atualizar. Tente novamente.');
         } finally {
             setLoading(false);
