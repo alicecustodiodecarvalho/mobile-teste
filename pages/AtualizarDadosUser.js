@@ -1,11 +1,93 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import NavbarPadrao from '../components/NavbarPadrao'
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import NavbarPadrao from '../components/NavbarPadrao';
 import Feather from '@expo/vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { TextInputMask } from 'react-native-masked-text';
 
-export default function LocalizacaoCarro() {
-
+export default function AtualizarDadosUser() {
     const navigation = useNavigation();
+
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [nascimento, setNascimento] = useState('');
+    const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const loadUserData = async () => {
+            try {
+                const storedNome = await AsyncStorage.getItem('nome');
+                const storedEmail = await AsyncStorage.getItem('email');
+                const storedCpf = await AsyncStorage.getItem('cpf');
+                const storedTelefone = await AsyncStorage.getItem('telefone');
+                const storedNascimento = await AsyncStorage.getItem('nascimento');
+
+                if (storedNome) setNome(storedNome);
+                if (storedEmail) setEmail(storedEmail);
+                if (storedCpf) setCpf(storedCpf);
+                if (storedTelefone) setTelefone(storedTelefone);
+                if (storedNascimento) setNascimento(storedNascimento);
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        };
+
+        loadUserData();
+    }, []);
+
+    const handleUpdate = async () => {
+        if (senha !== confirmarSenha) {
+            Alert.alert('Erro', 'As senhas não coincidem.');
+            return;
+        }
+
+        const cpfSemFormatacao = cpf.replace(/\D/g, '');
+        const telSemFormatacao = telefone.replace(/\D/g, '');
+        const nascimentoFormatado = nascimento.split('/').reverse().join('-');
+
+        setLoading(true);
+
+        try {
+            const response = await fetch('https://pi3-backend-i9l3.onrender.com/usuarios', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome,
+                    email,
+                    cpf: cpfSemFormatacao,
+                    telefone: telSemFormatacao,
+                    nascimento: nascimentoFormatado,
+                    senha
+                }),
+            });
+
+            if (response.ok) {
+                await AsyncStorage.setItem('nome', nome);
+                await AsyncStorage.setItem('email', email);
+                await AsyncStorage.setItem('cpf', cpfSemFormatacao);
+                await AsyncStorage.setItem('telefone', telSemFormatacao);
+                await AsyncStorage.setItem('nascimento', nascimentoFormatado);
+
+                Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
+                navigation.navigate('Home');
+            } else {
+                const errorText = await response.text();
+                Alert.alert('Erro', `Falha ao atualizar dados: ${errorText}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao atualizar. Tente novamente.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -17,46 +99,94 @@ export default function LocalizacaoCarro() {
                             source={require('../assets/images/avatar-hidan.jpg')}
                             style={styles.perfilImage}
                         />
-                        <Text >
-                        <Feather name="edit-2" size={24} color="black" />
-                        Editar
+                        <Text>
+                            <Feather name="edit-2" size={24} color="black" />
+                            Editar
                         </Text>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.headerContainer}>
-                    {/* <Text style={styles.primeira}>Primeira Etapa</Text> */}
-                    {/* <Text style={styles.localiza}>Onde se localiza o Carro?</Text> */}
+                    {/* Adicionando uma pequena margem para alinhar com a página de registro */}
                 </View>
 
                 <View style={styles.formContainer}>
                     <View>
-
-                        <TextInput style={styles.input} placeholder="Nome" />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nome"
+                            value={nome}
+                            onChangeText={setNome}
+                        />
                         <View style={styles.row}>
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="CPF" />
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Data de Nascimento" />
+                            <TextInputMask
+                                type={'cpf'}
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="CPF"
+                                value={cpf}
+                                onChangeText={setCpf}
+                            />
+                            <TextInputMask
+                                type={'datetime'}
+                                options={{ format: 'DD/MM/YYYY' }}
+                                style={styles.input}
+                                placeholder="Data de Nascimento"
+                                value={nascimento}
+                                onChangeText={setNascimento}
+                            />
                         </View>
-                        <TextInput style={styles.input} placeholder="Email" />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+                        <TextInputMask
+                            type={'cel-phone'}
+                            options={{
+                                maskType: 'BRL',
+                                withDDD: true,
+                                dddMask: '(99) '
+                            }}
+                            style={styles.input}
+                            placeholder="Telefone"
+                            value={telefone}
+                            onChangeText={setTelefone}
+                            keyboardType='numeric'
+                        />
                         <View style={styles.row}>
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Cidade" />
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Estado" />
-                        </View>
-                        <TextInput style={styles.input} placeholder="Telefone" />
-                        <View style={styles.row}>
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Senha" />
-                            <TextInput style={[styles.input, styles.cidadeEstado]} placeholder="Confirmar Senha" />
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Senha"
+                                secureTextEntry
+                                value={senha}
+                                onChangeText={setSenha}
+                            />
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Confirmar Senha"
+                                secureTextEntry
+                                value={confirmarSenha}
+                                onChangeText={setConfirmarSenha}
+                            />
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.proxButton} >
-                        <Text style={styles.buttonText}>Confirmar</Text>
+                    <TouchableOpacity
+                        style={styles.proxButton}
+                        onPress={handleUpdate}
+                    >
+                        {loading ? (
+                            <ActivityIndicator size="large" color="#fff" />
+                        ) : (
+                            <Text style={styles.buttonText}>Confirmar</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -71,19 +201,6 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         marginBottom: 30,
-    },
-    primeira: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        paddingTop: 80
-    },
-    localiza: {
-        fontSize: 16,
-        textAlign: 'left',
-        fontWeight: 'bold',
-        paddingTop: 50,
-        color: 'red'
     },
     formContainer: {
         flex: 1,
@@ -103,12 +220,6 @@ const styles = StyleSheet.create({
     },
     cidadeEstado: {
         width: '48%',
-    },
-    lograd: {
-        width: '70%',
-    },
-    num: {
-        width: '28%',
     },
     proxButton: {
         backgroundColor: '#ff0000',

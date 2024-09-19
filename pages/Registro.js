@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert, ActivityIndicator, Image } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Image } from 'react-native';
-import { TextInputMask } from 'react-native-masked-text'; // Instalar com: expo install react-native-masked-text
+import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Registro = ({ onRegister = () => { } }) => {
+const Registro = ({ onRegister = () => {} }) => {
     const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [cpf, setCpf] = useState('');
-    const [telefone, setTel] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [nascimento, setNascimento] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-    const [loading, setLoading] = useState(false); // Estado para o indicador de carregamento
-
+    const [loading, setLoading] = useState(false);
 
     const handleRegister = async () => {
         if (senha !== confirmarSenha) {
@@ -24,12 +23,11 @@ const Registro = ({ onRegister = () => { } }) => {
             return;
         }
 
-        // Remover formatação do CPF, telefone e data de nascimento antes de enviar
-        const cpfSemFormatacao = cpf.replace(/\D/g, ''); // Remove pontos e traços
-        const telSemFormatacao = telefone.replace(/\D/g, ''); // Remove parênteses e traços
-        const nascimentoFormatado = nascimento.split('/').reverse().join('-'); // Formato aaaa-mm-dd
+        const cpfSemFormatacao = cpf.replace(/\D/g, '');
+        const telSemFormatacao = telefone.replace(/\D/g, '');
+        const nascimentoFormatado = nascimento.split('/').reverse().join('-');
 
-        setLoading(true); // Ativa o loading ao iniciar o login
+        setLoading(true);
 
         try {
             const response = await fetch('https://pi3-backend-i9l3.onrender.com/usuarios', {
@@ -46,30 +44,42 @@ const Registro = ({ onRegister = () => { } }) => {
                     senha
                 }),
             });
+
             if (response.ok) {
                 const data = await response.json();
                 if (typeof onRegister === 'function') {
                     onRegister(data.user);
                 }
+                
+                // Salvar dados no AsyncStorage
+                await AsyncStorage.setItem('nome', nome);
+                await AsyncStorage.setItem('email', email);
+                await AsyncStorage.setItem('cpf', cpfSemFormatacao);
+                await AsyncStorage.setItem('telefone', telSemFormatacao);
+                await AsyncStorage.setItem('nascimento', nascimentoFormatado);
+
+                // Limpar os campos
                 setNome('');
                 setEmail('');
                 setCpf('');
-                setTel('');
+                setTelefone('');
                 setNascimento('');
                 setSenha('');
                 setConfirmarSenha('');
+                
                 navigation.navigate('Home');
             } else {
-                console.error('Falha ao registrar usuario', await response.text());
+                const errorText = await response.text();
+                Alert.alert('Erro', `Falha ao registrar usuário: ${errorText}`);
             }
         } catch (error) {
             console.error('Error:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao registrar. Tente novamente.');
         } finally {
-            setLoading(false); // Desativa o loading ao finalizar o login
+            setLoading(false);
         }
     };
 
-    // Função para esconder o teclado
     const dismissKeyboard = () => {
         Keyboard.dismiss();
     };
@@ -127,7 +137,7 @@ const Registro = ({ onRegister = () => { } }) => {
                                         style={[styles.input, styles.nome]}
                                         placeholder="Telefone"
                                         value={telefone}
-                                        onChangeText={setTel}
+                                        onChangeText={setTelefone}
                                         keyboardType='numeric'
                                     />
                                 </View>
@@ -150,7 +160,7 @@ const Registro = ({ onRegister = () => { } }) => {
                                 </View>
                             </View>
                             <View style={styles.botao}>
-                                {loading ? ( // Verifica se o estado de loading está ativo
+                                {loading ? (
                                     <ActivityIndicator size="large" color="red" />
                                 ) : (
                                     <TouchableOpacity style={styles.button} onPress={handleRegister}>
@@ -189,11 +199,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    login: {
-        fontSize: 26,
         fontWeight: 'bold',
         color: '#000',
     },

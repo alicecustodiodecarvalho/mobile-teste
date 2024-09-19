@@ -13,7 +13,7 @@ export default function SideBarUser() {
                     style={styles.perfilImage}
                 />
                 <View style={styles.usuario}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SideBarUser')}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.text}>Entrar</Text>
                     </TouchableOpacity>
                 </View>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+// Header.js
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -8,18 +9,22 @@ export default function Header() {
 
     useEffect(() => {
         const fetchNome = async () => {
-            const user = await AsyncStorage.getItem('nome');
-            if (user) {
-                setNome(user);
+            try {
+                const user = await AsyncStorage.getItem('nome');
+                setNome(user || 'Usuário'); // Define 'Usuário' como padrão se não houver nome
+            } catch (error) {
+                console.error('Failed to fetch user name:', error);
+                setNome('Usuário');
             }
         };
+
         fetchNome();
     }, []);
 
     return (
         <View style={styles.header}>
             <View style={styles.user}>
-                <Text style={styles.name}>{nome || 'Usuário'}</Text>
+                <Text style={styles.name}>{nome}</Text>
                 <Image
                     style={styles.avatar}
                     source={require('../assets/images/avatar-hidan.jpg')}
