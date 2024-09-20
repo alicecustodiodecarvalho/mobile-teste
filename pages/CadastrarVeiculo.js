@@ -1,11 +1,66 @@
+import { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function AtualizarDadosCarro() {
-
   const navigation = useNavigation();
+
+  const [cars, setCars] = useState([])
+  const [txtCep, setTxtCep] = useState('')
+  const [txtCidade, setTxtCidade] = useState('')
+  const [txtEstado, setTxtEstado] = useState('')
+  const [txtLogradouro, setTxtLogradouro] = useState('')
+  const [txtNumero, setTxtNumero] = useState('')
+  const [txtComplemento, setTxtComplemento] = useState('')
+  const [txtMarca, setTxtMarca] = useState('')
+  const [txtModelo, setTxtModelo] = useState('')
+  const [txtValor, setTxtValor] = useState('')
+  const [txtAnoFabricacao, setTxtAnoFabricacao] = useState('')
+  const [txtCambio, setTxtCambio] = useState('')
+  const [txtCarroceria, setTxtCarroceria] = useState('')
+  const [txtCombustivel, setTxtCombustivel] = useState('')
+  const [txtKm, setTxtKm] = useState('')
+  const [txtCor, setTxtCor] = useState('')
+  const [txtDescricao, setTxtDescricao] = useState('')
+
+  const handlerCreateCar = async () => {
+    const car = {
+      cep: txtCep,
+      cidade: txtCidade,
+      estado: txtEstado,
+      logradouro: txtLogradouro,
+      numero: txtNumero,
+      complemento: txtComplemento,
+      marca: txtMarca,
+      modelo: txtModelo,
+      valor: txtValor,
+      anoFabricacao: txtAnoFabricacao,
+      cambio: txtCambio,
+      carroceria: txtCarroceria,
+      combustivel: txtCombustivel,
+      km: txtKm,
+      cor: txtCor,
+      descricao: txtDescricao
+    }
+
+    const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(car)
+    })
+    if (response.ok) {
+      const data = await response.json()
+      console.log(data)
+      setCars([data.car, ...cars])
+      return
+    }
+    console.log("Erro ao carregar carros")
+    return
+  }
 
   return (
     <View style={styles.container}>
@@ -14,54 +69,90 @@ export default function AtualizarDadosCarro() {
         <ScrollView style={styles.formContainer}>
           <Text style={styles.sectionTitle}>Onde se Localiza o Carro?</Text>
 
-          <TextInput style={styles.input} placeholder="CEP" />
+          <TextInput
+            style={styles.input}
+            placeholder="CEP"
+            onChangeText={setTxtCep}
+            value={txtCep}
+          />
 
           <View style={styles.row}>
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Cidade" />
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Estado" />
-          </View>
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Cidade"
+              onChangeText={setTxtCidade}
+              value={txtCidade}
+            />
 
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Estado"
+              onChangeText={setTxtEstado}
+              value={txtEstado}
+            />
+          </View>
           <View style={styles.row}>
-            <TextInput style={[styles.input, styles.largeInput]} placeholder="Logradouro" />
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Número" />
+            <TextInput 
+            style={[styles.input, styles.largeInput]} 
+            placeholder="Logradouro" 
+            onChangeText={setTxtLogradouro}
+              value={txtLogradouro}
+            />
+            <TextInput 
+            style={[styles.input, styles.smallInput]} 
+            placeholder="Número" 
+            onChangeText={setTxtNumero}
+              value={txtNumero}
+            />
           </View>
-
           <TextInput style={styles.input} placeholder="Complemento" />
-{/* 
-          <Text style={styles.sectionTitle}>Fotos</Text>
-          <View style={styles.imageRow}>
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-            <MaterialCommunityIcons name="image-plus" size={50} color="red" />
-          </View> */}
 
           <Text style={styles.sectionTitle}>Digite Informações do Carro</Text>
 
-          <TextInput style={styles.input} placeholder="Marca" />
-          <TextInput style={styles.input} placeholder="Modelo" />
-          <TextInput style={styles.input} placeholder="Informações do carro" />
-          <TextInput style={styles.input} placeholder="Valor" />
+          <TextInput
+            style={styles.input}
+            placeholder="Marca"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Modelo"
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Valor"
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Ano de Fabricação"
+          />
 
           <View style={styles.row}>
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Fabricação" />
+            <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
             <TextInput style={[styles.input, styles.smallInput]} placeholder="Câmbio" />
           </View>
 
-          <View style={styles.row}>
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Ano de Modelo" />
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
-          </View>
+          <TextInput style={[styles.input]} placeholder="Combustível" />
+
+
 
           <View style={styles.row}>
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Km" />
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Combustível" />
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Km"
+            />
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Cor"
+            />
           </View>
 
-          <TextInput style={styles.input} placeholder="Cor" />
-          <TextInput style={[styles.input, styles.description]} placeholder="Descrição do Veículo" multiline />
+          <TextInput
+            style={[styles.input, styles.description]}
+            placeholder="Descrição do Veículo"
+            multiline
+          />
 
           <TouchableOpacity style={styles.confirmButton}>
             <Text style={styles.confirmButtonText}>Confirmar</Text>
