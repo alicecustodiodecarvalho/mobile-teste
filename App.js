@@ -22,6 +22,8 @@ import DetalhesVendedor from './pages/DetalhesVendedor';
 import CompraCarro from './pages/CompraCarro';
 import Sidebar from './pages/Sidebar';
 import MinhasCompras from './pages/MinhasCompras';
+import RegistroAdm from './pages/admPages/RegistroAdm';
+import CadastrarVeiculo from './pages/CadastrarVeiculo';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +31,7 @@ export default function App() {
   const navigationRef = useNavigationContainerRef();
   const [currentRoute, setCurrentRoute] = useState();
 
-  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar'];
+  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo'];
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
@@ -69,6 +71,8 @@ export default function App() {
         <Stack.Screen name="Comprar" component={CompraCarro} />
         <Stack.Screen name="Sidebar" component={Sidebar} />
         <Stack.Screen name="Compras" component={MinhasCompras} />
+        <Stack.Screen name="AdmRegistro" component={RegistroAdm} />
+        <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} />
       </Stack.Navigator>
 
       {/* Renderizar o Footer condicionalmente */}

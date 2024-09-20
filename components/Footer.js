@@ -34,7 +34,7 @@ export default function Footer() {
             <TouchableOpacity onPress={() => navigation.navigate('Catalogo')}>
                 <Feather name="search" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('LocalizacaoCarro')}>
+            <TouchableOpacity onPress={() => navigation.navigate('CadastrarVeiculo')}>
                 <AntDesign name="plus" size={25} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('MeusVeiculos')}>
