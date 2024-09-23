@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CardCarMaior() {
+export default function CardCarMaior(props) {
 
     const navigation = useNavigation();
 
@@ -11,25 +11,25 @@ export default function CardCarMaior() {
             <View style={styles.card}>
                 <Image
                     style={styles.image}
-                    source='https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                    source={props.foto}
                 />
                 <View style={styles.info1}>
                     <View style={styles.madelo}>
-                        <Text style={styles.marca}>Toyota</Text>
-                        <Text style={styles.modelo}> Supra</Text>
+                        <Text style={styles.marca}>{props.marca}</Text>
+                        <Text style={styles.modelo}> {props.modelo}</Text>
                     </View>
-                    <Text style={styles.adicionais}>Transmissão automática, motor i6, corre pra k7, bonito, bem tratado, sem problemas, praticamente novo</Text>
-                    <Text style={styles.preco}>R$ 300.000,00</Text>
+                    <Text style={styles.adicionais}>{props.descricao}</Text>
+                    <Text style={styles.preco}>R$ {props.valor}</Text>
                 </View>
                 <View style={styles.info2}>
 
                     <View style={styles.line1}>
-                        <Text style={styles.text}>KM: 74.587</Text>
-                        <Text style={styles.text}>Ano: 1993</Text>
-                        <Text style={styles.text}>Cor: cinza prata</Text>
+                        <Text style={styles.text}>KM: {props.km}</Text>
+                        <Text style={styles.text}>Ano: {props.anoFabricacao}</Text>
+                        <Text style={styles.text}>Cor: {props.cor}</Text>
                     </View>
                     <View>
-                        <Text style={styles.text}>Caraguatauba-SP</Text>
+                        <Text style={styles.text}>{props.cidade}-{props.estado}</Text>
                     </View>
                 </View>
             </View>

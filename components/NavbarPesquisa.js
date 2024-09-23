@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-export default function NavbarPesquisa() {
+export default function NavbarPesquisa({ alterarModoExibicao }) {
 
   const navigation = useNavigation();
 
@@ -18,11 +18,8 @@ export default function NavbarPesquisa() {
         <Text style={styles.titleText}>Pesquisa</Text>
       </View>
 
-      {/* Linha separadora */}
-      {/* <View style={styles.separator} /> */}
-
       <View style={styles.navbar}>
-        <TouchableOpacity style={[styles.navItem]}>
+        <TouchableOpacity style={[styles.navItem]} onPress={alterarModoExibicao}>
           <FontAwesome5 name="th-list" size={20} color="black" />
           <Text style={styles.navText}>Exibir</Text>
         </TouchableOpacity>
@@ -40,6 +37,7 @@ export default function NavbarPesquisa() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   navbarContainer: {

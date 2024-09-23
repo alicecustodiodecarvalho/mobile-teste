@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function AtualizarDadosCarro() {
   const navigation = useNavigation();
 
-  const [cars, setCars] = useState([])
+  const [veiculos, setVeiculos] = useState([])
   const [txtCep, setTxtCep] = useState('')
   const [txtCidade, setTxtCidade] = useState('')
   const [txtEstado, setTxtEstado] = useState('')
@@ -26,7 +26,7 @@ export default function AtualizarDadosCarro() {
   const [txtDescricao, setTxtDescricao] = useState('')
 
   const handlerCreateCar = async () => {
-    const car = {
+    const veiculo = {
       cep: txtCep,
       cidade: txtCidade,
       estado: txtEstado,
@@ -35,30 +35,37 @@ export default function AtualizarDadosCarro() {
       complemento: txtComplemento,
       marca: txtMarca,
       modelo: txtModelo,
-      valor: txtValor,
-      anoFabricacao: txtAnoFabricacao,
+      valor: parseInt(txtValor), 
+      anoFabricacao: parseInt(txtAnoFabricacao),
       cambio: txtCambio,
       carroceria: txtCarroceria,
       combustivel: txtCombustivel,
-      km: txtKm,
+      km: parseInt(txtKm),
       cor: txtCor,
-      descricao: txtDescricao
-    }
+      descricao: txtDescricao,
+      usuarioId: 1,
+      foto: "https://foto.png"
+    };
 
     const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(car)
-    })
+      body: JSON.stringify(veiculo)
+    });
+
+    const responseBody = await response.text();
     if (response.ok) {
-      const data = await response.json()
-      console.log(data)
-      setCars([data.car, ...cars])
-      return
+      const data = await response.json();
+      console.log(data);
+      setVeiculos([data.veiculo, ...veiculos]);
+      navigation.navigate('Home');
+    } else {
+      console.log("Erro ao carregar carros");
+      console.log("Status:", response.status);
+      console.log("Resposta:", responseBody);
     }
-    console.log("Erro ao carregar carros")
     return
   }
 
@@ -74,6 +81,7 @@ export default function AtualizarDadosCarro() {
             placeholder="CEP"
             onChangeText={setTxtCep}
             value={txtCep}
+            keyboardType='numeric'
           />
 
           <View style={styles.row}>
@@ -92,48 +100,78 @@ export default function AtualizarDadosCarro() {
             />
           </View>
           <View style={styles.row}>
-            <TextInput 
-            style={[styles.input, styles.largeInput]} 
-            placeholder="Logradouro" 
-            onChangeText={setTxtLogradouro}
+            <TextInput
+              style={[styles.input, styles.largeInput]}
+              placeholder="Logradouro"
+              onChangeText={setTxtLogradouro}
               value={txtLogradouro}
             />
-            <TextInput 
-            style={[styles.input, styles.smallInput]} 
-            placeholder="Número" 
-            onChangeText={setTxtNumero}
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Número"
+              onChangeText={setTxtNumero}
               value={txtNumero}
             />
           </View>
-          <TextInput style={styles.input} placeholder="Complemento" />
+          <TextInput
+            style={styles.input}
+            placeholder="Complemento"
+            onChangeText={setTxtComplemento}
+            value={txtComplemento}
+          />
 
           <Text style={styles.sectionTitle}>Digite Informações do Carro</Text>
 
           <TextInput
             style={styles.input}
             placeholder="Marca"
+            onChangeText={setTxtMarca}
+            value={txtMarca}
           />
           <TextInput
             style={styles.input}
             placeholder="Modelo"
+            onChangeText={setTxtModelo}
+            value={txtModelo}
           />
 
           <TextInput
             style={styles.input}
             placeholder="Valor"
+            onChangeText={setTxtValor}
+            value={txtValor}
+            keyboardType='numeric'
           />
 
           <TextInput
             style={styles.input}
             placeholder="Ano de Fabricação"
+            onChangeText={setTxtAnoFabricacao}
+            value={txtAnoFabricacao}
+            keyboardType='numeric'
           />
 
           <View style={styles.row}>
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Carroceria" />
-            <TextInput style={[styles.input, styles.smallInput]} placeholder="Câmbio" />
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Carroceria"
+              onChangeText={setTxtCarroceria}
+              value={txtCarroceria}
+            />
+            <TextInput
+              style={[styles.input, styles.smallInput]}
+              placeholder="Câmbio"
+              onChangeText={setTxtCambio}
+              value={txtCambio}
+            />
           </View>
 
-          <TextInput style={[styles.input]} placeholder="Combustível" />
+          <TextInput
+            style={[styles.input]}
+            placeholder="Combustível"
+            onChangeText={setTxtCombustivel}
+            value={txtCombustivel}
+          />
 
 
 
@@ -141,20 +179,27 @@ export default function AtualizarDadosCarro() {
             <TextInput
               style={[styles.input, styles.smallInput]}
               placeholder="Km"
+              onChangeText={setTxtKm}
+              value={txtKm}
+              keyboardType='numeric'
             />
             <TextInput
               style={[styles.input, styles.smallInput]}
               placeholder="Cor"
+              onChangeText={setTxtCor}
+              value={txtCor}
             />
           </View>
 
           <TextInput
             style={[styles.input, styles.description]}
             placeholder="Descrição do Veículo"
+            onChangeText={setTxtDescricao}
+            value={txtDescricao}
             multiline
           />
 
-          <TouchableOpacity style={styles.confirmButton}>
+          <TouchableOpacity style={styles.confirmButton} onPress={handlerCreateCar}>
             <Text style={styles.confirmButtonText}>Confirmar</Text>
           </TouchableOpacity>
         </ScrollView>
