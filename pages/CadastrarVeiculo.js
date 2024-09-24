@@ -1,29 +1,27 @@
 import { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function AtualizarDadosCarro() {
   const navigation = useNavigation();
 
-  const [veiculos, setVeiculos] = useState([])
-  const [txtCep, setTxtCep] = useState('')
-  const [txtCidade, setTxtCidade] = useState('')
-  const [txtEstado, setTxtEstado] = useState('')
-  const [txtLogradouro, setTxtLogradouro] = useState('')
-  const [txtNumero, setTxtNumero] = useState('')
-  const [txtComplemento, setTxtComplemento] = useState('')
-  const [txtMarca, setTxtMarca] = useState('')
-  const [txtModelo, setTxtModelo] = useState('')
-  const [txtValor, setTxtValor] = useState('')
-  const [txtAnoFabricacao, setTxtAnoFabricacao] = useState('')
-  const [txtCambio, setTxtCambio] = useState('')
-  const [txtCarroceria, setTxtCarroceria] = useState('')
-  const [txtCombustivel, setTxtCombustivel] = useState('')
-  const [txtKm, setTxtKm] = useState('')
-  const [txtCor, setTxtCor] = useState('')
-  const [txtDescricao, setTxtDescricao] = useState('')
+  const [txtCep, setTxtCep] = useState('');
+  const [txtCidade, setTxtCidade] = useState('');
+  const [txtEstado, setTxtEstado] = useState('');
+  const [txtLogradouro, setTxtLogradouro] = useState('');
+  const [txtNumero, setTxtNumero] = useState('');
+  const [txtComplemento, setTxtComplemento] = useState('');
+  const [txtMarca, setTxtMarca] = useState('');
+  const [txtModelo, setTxtModelo] = useState('');
+  const [txtValor, setTxtValor] = useState('');
+  const [txtAnoFabricacao, setTxtAnoFabricacao] = useState('');
+  const [txtCambio, setTxtCambio] = useState('');
+  const [txtCarroceria, setTxtCarroceria] = useState('');
+  const [txtCombustivel, setTxtCombustivel] = useState('');
+  const [txtKm, setTxtKm] = useState('');
+  const [txtCor, setTxtCor] = useState('');
+  const [txtDescricao, setTxtDescricao] = useState('');
 
   const handlerCreateCar = async () => {
     const veiculo = {
@@ -35,7 +33,7 @@ export default function AtualizarDadosCarro() {
       complemento: txtComplemento,
       marca: txtMarca,
       modelo: txtModelo,
-      valor: parseInt(txtValor), 
+      valor: parseInt(txtValor),
       anoFabricacao: parseInt(txtAnoFabricacao),
       cambio: txtCambio,
       carroceria: txtCarroceria,
@@ -47,26 +45,26 @@ export default function AtualizarDadosCarro() {
       foto: "https://foto.png"
     };
 
-    const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(veiculo)
-    });
+    try {
+      const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(veiculo)
+      });
 
-    const responseBody = await response.text();
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setVeiculos([data.veiculo, ...veiculos]);
-      navigation.navigate('Home');
-    } else {
-      console.log("Erro ao carregar carros");
-      console.log("Status:", response.status);
-      console.log("Resposta:", responseBody);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        navigation.navigate('Home');
+      } else {
+        const responseBody = await response.text(); // Ler o corpo da resposta
+        console.error("Erro ao carregar carros:", response.status, responseBody);
+      }
+    } catch (error) {
+      console.error("Erro ao registrar carro:", error);
     }
-    return
   }
 
   return (
@@ -91,7 +89,6 @@ export default function AtualizarDadosCarro() {
               onChangeText={setTxtCidade}
               value={txtCidade}
             />
-
             <TextInput
               style={[styles.input, styles.smallInput]}
               placeholder="Estado"
@@ -134,7 +131,6 @@ export default function AtualizarDadosCarro() {
             onChangeText={setTxtModelo}
             value={txtModelo}
           />
-
           <TextInput
             style={styles.input}
             placeholder="Valor"
@@ -142,7 +138,6 @@ export default function AtualizarDadosCarro() {
             value={txtValor}
             keyboardType='numeric'
           />
-
           <TextInput
             style={styles.input}
             placeholder="Ano de Fabricação"
@@ -150,7 +145,6 @@ export default function AtualizarDadosCarro() {
             value={txtAnoFabricacao}
             keyboardType='numeric'
           />
-
           <View style={styles.row}>
             <TextInput
               style={[styles.input, styles.smallInput]}
@@ -165,16 +159,12 @@ export default function AtualizarDadosCarro() {
               value={txtCambio}
             />
           </View>
-
           <TextInput
             style={[styles.input]}
             placeholder="Combustível"
             onChangeText={setTxtCombustivel}
             value={txtCombustivel}
           />
-
-
-
           <View style={styles.row}>
             <TextInput
               style={[styles.input, styles.smallInput]}
@@ -190,7 +180,6 @@ export default function AtualizarDadosCarro() {
               value={txtCor}
             />
           </View>
-
           <TextInput
             style={[styles.input, styles.description]}
             placeholder="Descrição do Veículo"
@@ -198,7 +187,6 @@ export default function AtualizarDadosCarro() {
             value={txtDescricao}
             multiline
           />
-
           <TouchableOpacity style={styles.confirmButton} onPress={handlerCreateCar}>
             <Text style={styles.confirmButtonText}>Confirmar</Text>
           </TouchableOpacity>
@@ -206,7 +194,7 @@ export default function AtualizarDadosCarro() {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -215,12 +203,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    padding: 20
-  },
-  backButton: {
-    fontSize: 16,
-    color: '#000',
-    marginBottom: 10,
+    padding: 20,
   },
   formContainer: {
     flex: 1,
@@ -252,18 +235,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 20,
     marginBottom: 10,
-  },
-  imageRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 5,
   },
   confirmButton: {
     backgroundColor: '#ff0000',
