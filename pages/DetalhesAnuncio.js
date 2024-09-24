@@ -12,7 +12,7 @@ export default function CarDetailsPage() {
   const toggleText = () => {
     setExpanded(!expanded);
   };
-  // Estado para armazenar os detalhes do veículo
+  
   const [carDetails, setCarDetails] = useState({
     cidade: 'São Paulo, SP',
     anoFabricacao: '2020',
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   },
   imageGallery: {
     height: 300,
-    // marginBottom: 16,
     width: 'auto'
   },
   carImage: {
@@ -141,8 +140,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 20,
-    // marginHorizontal: 10,
-    // marginVertical: 10,
   },
   detailItem: {
     flexDirection: 'column',
@@ -154,7 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    // width: '50%'
   },
   madelo: {
     flexDirection: 'row'

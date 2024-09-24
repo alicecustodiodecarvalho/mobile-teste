@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
 import Content from '../components/Content';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home() {
     return (
@@ -13,6 +14,7 @@ export default function Home() {
             
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({

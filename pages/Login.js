@@ -29,7 +29,13 @@ export default function Login() {
                 const data = await response.json();
                 console.log(data); // Verifique o que está sendo retornado
                 if (data.nome) { // Verifique se nome existe
+                    var id = data.id
                     await AsyncStorage.setItem('nome', data.nome);
+                    await AsyncStorage.setItem('id', id.toString());
+                    await AsyncStorage.setItem('email', data.email);
+                    await AsyncStorage.setItem('senha', data.senha);
+                    await AsyncStorage.setItem('token', data.accessToken);
+                    // await AsyncStorage.setItem('data', data);
                 } else {
                     console.warn('nome não encontrado no retorno da API');
                 }

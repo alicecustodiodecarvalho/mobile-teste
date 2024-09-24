@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AtualizarDadosCarro() {
   const navigation = useNavigation();
@@ -24,6 +25,8 @@ export default function AtualizarDadosCarro() {
   const [txtDescricao, setTxtDescricao] = useState('');
 
   const handlerCreateCar = async () => {
+    const id = await AsyncStorage.getItem('id');
+
     const veiculo = {
       cep: txtCep,
       cidade: txtCidade,
@@ -41,7 +44,7 @@ export default function AtualizarDadosCarro() {
       km: parseInt(txtKm),
       cor: txtCor,
       descricao: txtDescricao,
-      usuarioId: 1,
+      usuarioId: parseInt(id),
       foto: "https://foto.png"
     };
 

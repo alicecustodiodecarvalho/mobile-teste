@@ -1,8 +1,8 @@
-// Header.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Header() {
     const [nome, setNome] = useState('');
@@ -11,6 +11,7 @@ export default function Header() {
         const fetchNome = async () => {
             try {
                 const user = await AsyncStorage.getItem('nome');
+                const email = await AsyncStorage.getItem('email');
                 setNome(user || 'Usuário'); // Define 'Usuário' como padrão se não houver nome
             } catch (error) {
                 console.error('Failed to fetch user name:', error);

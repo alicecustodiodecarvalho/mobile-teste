@@ -23,12 +23,12 @@ export default function AtualizarDadosUser() {
         const loadUserData = async () => {
             try {
                 // Carregando dados do AsyncStorage
-                const storedId = await AsyncStorage.getItem('storedId');
-                const storedNome = await AsyncStorage.getItem('storedNome');
-                const storedEmail = await AsyncStorage.getItem('storedEmail');
-                const storedCpf = await AsyncStorage.getItem('storedCpf');
-                const storedTelefone = await AsyncStorage.getItem('storedTelefone');
-                const storedNascimento = await AsyncStorage.getItem('storedNascimento');
+                const storedId = await AsyncStorage.getItem('id');
+                const storedNome = await AsyncStorage.getItem('nome');
+                const storedEmail = await AsyncStorage.getItem('email');
+                const storedCpf = await AsyncStorage.getItem('cpf');
+                const storedTelefone = await AsyncStorage.getItem('telefone');
+                const storedNascimento = await AsyncStorage.getItem('nascimento');
 
                 if (storedId) setId(storedId);
                 if (storedNome) setNome(storedNome);
@@ -45,6 +45,8 @@ export default function AtualizarDadosUser() {
     }, []);
 
     const handleUpdate = async () => {
+        const token = await AsyncStorage.getItem('token');
+
         if (senha !== confirmarSenha) {
             Alert.alert('Erro', 'As senhas não coincidem.');
             return;
@@ -62,14 +64,15 @@ export default function AtualizarDadosUser() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     nome,
                     email,
                     cpf: cpfSemFormatacao,
                     telefone: telSemFormatacao,
-                    nascimento: nascimentoFormatado,
-                    senha
+                    // nascimento: nascimentoFormatado,
+                    // senha
                 }),
             });
 
