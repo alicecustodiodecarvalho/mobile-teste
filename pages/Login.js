@@ -35,7 +35,8 @@ export default function Login() {
                     await AsyncStorage.setItem('email', data.email);
                     await AsyncStorage.setItem('senha', data.senha);
                     await AsyncStorage.setItem('token', data.accessToken);
-                    // await AsyncStorage.setItem('data', data);
+                    await AsyncStorage.setItem('telefone', data.telefone);
+                    await AsyncStorage.setItem('cpf', data.cpf);
                 } else {
                     console.warn('nome não encontrado no retorno da API');
                 }
