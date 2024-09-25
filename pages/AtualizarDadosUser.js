@@ -78,10 +78,10 @@ export default function AtualizarDadosUser() {
 
             if (response.ok) {
                 // Atualizando dados no AsyncStorage
-                await AsyncStorage.setItem('storedNome', nome);
-                await AsyncStorage.setItem('storedEmail', email);
-                await AsyncStorage.setItem('storedCpf', cpfSemFormatacao);
-                await AsyncStorage.setItem('storedTelefone', telSemFormatacao);
+                await AsyncStorage.setItem('nome', nome);
+                await AsyncStorage.setItem('email', email);
+                await AsyncStorage.setItem('cpf', cpfSemFormatacao);
+                await AsyncStorage.setItem('telefone', telSemFormatacao);
                 await AsyncStorage.setItem('storedNascimento', nascimentoFormatado);
 
                 Alert.alert('Sucesso', 'Dados atualizados com sucesso!');

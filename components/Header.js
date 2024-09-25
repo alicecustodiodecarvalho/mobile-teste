@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Header() {
     const [nome, setNome] = useState('');
 
-    useEffect(() => {
-        const fetchNome = async () => {
-            try {
+    // Use o useFocusEffect para buscar o nome sempre que a tela ganhar foco
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchNome = async () => {
                 const user = await AsyncStorage.getItem('nome');
-                const email = await AsyncStorage.getItem('email');
-                setNome(user || 'Usuário'); // Define 'Usuário' como padrão se não houver nome
-            } catch (error) {
-                console.error('Failed to fetch user name:', error);
-                setNome('Usuário');
-            }
-        };
-
-        fetchNome();
-    }, []);
+                if (user) {
+                    setNome(user);
+                }
+            };
+            fetchNome();
+        }, [])
+    );
 
     return (
         <View style={styles.header}>
