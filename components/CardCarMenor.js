@@ -7,7 +7,7 @@ export default function CardCarMenor(props) {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.pad} onPress={() => navigation.navigate('Anuncio')}>
+        <TouchableOpacity style={styles.pad} onPress={() => navigation.navigate('Anuncio', {veiculo:props})}>
             <View style={styles.card}>
             <Image
                 style={styles.image}
@@ -20,9 +20,6 @@ export default function CardCarMenor(props) {
                     <Text style={styles.marca}>{props.marca} </Text>
                     <Text style={styles.modelo}>{props.modelo}</Text>
                 </View>
-           
-            
-
                
                 <Text style={styles.adicionais}>Ler Detalhes...</Text>
                 

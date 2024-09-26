@@ -37,7 +37,7 @@ export default function Footer() {
             <TouchableOpacity onPress={() => navigation.navigate('CadastrarVeiculo')}>
                 <AntDesign name="plus" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Teste')}>
+            <TouchableOpacity onPress={() => navigation.navigate('MeusVeiculos')}>
                 <Ionicons name="car-sport-outline" size={25} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleMenuPress}>
