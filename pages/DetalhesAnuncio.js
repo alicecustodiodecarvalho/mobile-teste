@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import NavbarDetalhes from '../components/NavbarDetalhes';
 import FooterVendas from '../components/FooterVendas';
 
-const { width } = Dimensions.get('window')
-
+const { width } = Dimensions.get('window');
 
 export default function CarDetailsPage() {
+  const route = useRoute();
+  const { veiculo } = route.params;
+
   const [expanded, setExpanded] = useState(false);
 
   const toggleText = () => {
     setExpanded(!expanded);
   };
-  
-  const [carDetails, setCarDetails] = useState({
+
+  const [carDetails, setCarDetails] = useState(veiculo || {
     cidade: 'São Paulo, SP',
     anoFabricacao: '2020',
     anoModelo: '2021',
@@ -22,47 +25,42 @@ export default function CarDetailsPage() {
     carroceria: 'SUV',
     combustivel: 'Gasolina',
     cor: 'Preto',
-    observacoes: 'Tô vendendo meu Supra, um verdadeiro monstro das ruas. Pra quem manja, já sabe: é aquele clássico JDM com o lendário motor 2JZ, tração traseira e pronto pra despejar potência. O carro tá liso, sem detalhe, sempre bem cuidado e com tudo em cima nas manutenções. Se você curte projetinho, esse aqui é um prato cheio pra mod, aceita personalização numa boa, tanto de motor quanto estética. É o tipo de máquina que quando para, todo mundo vira o pescoço, e quando acelera, não tem pra ninguém. Ideal pra quem quer dar aquele rolê de responsa ou até mesmo colar nos eventos e arrancar suspiro da galera. Se você tá na pegada de pegar um JDM raiz, com história, potência e ainda com potencial de valorização, pode acreditar: esse Supra é o rolê certo!',
+    observacoes: 'Tô vendendo meu Supra...',
   });
-
-  // Função para atualizar as observações
-  const handleObservationChange = (text) => {
-    setCarDetails({ ...carDetails, observacoes: text });
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <NavbarDetalhes texto="Anúncio" />
 
       <View style={styles.imageGallery}>
-        <ScrollView horizontal pagingEnabled >
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/6894428/pexels-photo-6894428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
-            style={styles.carImage}
-          />
+        <ScrollView horizontal pagingEnabled>
+          {/* Verifica se 'veiculo.foto' existe */}
+          {veiculo?.foto ? (
+            <Image
+              source={{ uri: veiculo.foto }}
+              style={styles.carImage}
+            />
+          ) : (
+            <Image
+              source={{ uri: 'https://via.placeholder.com/300' }}
+              style={styles.carImage}
+            />
+          )}
         </ScrollView>
       </View>
 
       <View style={styles.detailsContainer}>
         <View style={styles.madelo}>
-          <Text style={styles.detailTitle}>Toyota </Text>
-          <Text style={styles.modelo}>Supra</Text>
+          <Text style={styles.detailTitle}>{carDetails.marca} </Text>
+          <Text style={styles.modelo}>{carDetails.modelo}</Text>
         </View>
         <View style={styles.preco}>
-          <Text style={styles.preco}>R$1.000.000 </Text>
+          <Text style={styles.preco}>R$ {carDetails.valor}</Text>
         </View>
         <View style={styles.line}>
           <View style={styles.detailItem}>
             <Text style={styles.detailTitle}>Cidade:</Text>
-            <Text style={styles.detailValue}>{carDetails.cidade}</Text>
+            <Text style={styles.detailValue}>{carDetails.cidade}-{carDetails.estado}</Text>
           </View>
 
           <View style={styles.detailItem}>
@@ -73,13 +71,13 @@ export default function CarDetailsPage() {
 
         <View style={styles.line}>
           <View style={styles.detailItem}>
-            <Text style={styles.detailTitle}>Ano Modelo:</Text>
-            <Text style={styles.detailValue}>{carDetails.anoModelo}</Text>
+            <Text style={styles.detailTitle}>Logradouro:</Text>
+            <Text style={styles.detailValue}>{carDetails.logradouro}</Text>
           </View>
 
           <View style={styles.detailItem}>
             <Text style={styles.detailTitle}>Quilometragem:</Text>
-            <Text style={styles.detailValue}>{carDetails.quilometragem}</Text>
+            <Text style={styles.detailValue}>{carDetails.km}</Text>
           </View>
         </View>
 
@@ -109,7 +107,11 @@ export default function CarDetailsPage() {
 
         <View>
           <Text style={styles.detailTitle}>Observações:</Text>
-          <Text style={styles.obs}>{expanded ? carDetails.observacoes : `${carDetails.observacoes.substring(0, 100)}...`}</Text>
+          <Text style={styles.obs}>
+            {expanded
+              ? carDetails.descricao || ''
+              : (carDetails.descricao&& <Text>{carDetails.descricao.substring(0, 100)}...</Text>) || ''}
+          </Text>
           <TouchableOpacity onPress={toggleText}>
             <Text style={styles.ler}>{expanded ? "Ler menos" : "Ler mais"}</Text>
           </TouchableOpacity>
@@ -117,7 +119,6 @@ export default function CarDetailsPage() {
       </View>
       <FooterVendas />
     </ScrollView>
-
   );
 }
 
@@ -175,9 +176,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  ler:{
-    color:'red',
-    fontWeight:'900'
+  ler: {
+    color: 'red',
+    fontWeight: '900'
   }
 });
 

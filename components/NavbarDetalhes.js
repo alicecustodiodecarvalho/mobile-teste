@@ -3,9 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function NavbarDetalhes({texto}) {
-
+export default function NavbarDetalhes({ texto, vendedor, veiculo }) {
   const navigation = useNavigation();
+
+  const handleNavigateToVendedor = () => {
+    if (vendedor && vendedor.usuarioId) {
+      navigation.navigate('DetalhesVendedor', { usuarioId: vendedor.usuarioId });
+    } else {
+      console.warn("Vendedor não encontrado");
+    }
+  };
 
   return (
     <View style={styles.navbarContainer}>
@@ -17,11 +24,11 @@ export default function NavbarDetalhes({texto}) {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={[styles.navItem]} onPress={() => navigation.navigate('Anuncio')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Anuncio', { veiculo })}>
           <Text style={styles.navText}>Veículo</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.navItem]} onPress={() => navigation.navigate('DetalhesVendedor')}>
+        <TouchableOpacity style={styles.navItem} onPress={handleNavigateToVendedor}>
           <Text style={styles.navText}>Vendedor</Text>
         </TouchableOpacity>
       </View>
@@ -32,9 +39,9 @@ export default function NavbarDetalhes({texto}) {
 const styles = StyleSheet.create({
   navbarContainer: {
     backgroundColor: '#fff',
-    borderTopWidth:20,
+    borderTopWidth: 20,
     borderColor: 'transparent',
-    elevation:10
+    elevation: 10,
   },
   titleContainer: {
     flexDirection: 'row',
@@ -45,12 +52,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     marginLeft: 20,
-    fontWeight:'bold'
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#ccc',
-    marginVertical: 10,
+    fontWeight: 'bold',
   },
   navbar: {
     flexDirection: 'row',
@@ -64,14 +66,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     padding: 15,
-    gap: 6
+    gap: 6,
   },
   navText: {
     fontSize: 16,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
-  container: {
-    flex: 1,
-    backgroundColor: "#232323"
-  }
 });
