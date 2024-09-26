@@ -30,7 +30,7 @@ export default function CarDetailsPage() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <NavbarDetalhes texto="Anúncio" />
+      <NavbarDetalhes texto="Anúncio" vendedor={carDetails.usuarioId} />
 
       <View style={styles.imageGallery}>
         <ScrollView horizontal pagingEnabled>
@@ -117,7 +117,7 @@ export default function CarDetailsPage() {
           </TouchableOpacity>
         </View>
       </View>
-      <FooterVendas />
+      <FooterVendas teste={true}/>
     </ScrollView>
   );
 }

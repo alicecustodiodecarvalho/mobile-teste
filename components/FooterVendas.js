@@ -3,16 +3,17 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function SalesFooter() {
+export default function SalesFooter({teste}) {
 
   const navigation = useNavigation();
 
   return (
     <View style={styles.footerContainer}>
+      {teste===true?
       <TouchableOpacity style={styles.comprarButton} onPress={() => navigation.navigate('Comprar')}>
         <Text style={styles.buttonText}>Comprar</Text>
-      </TouchableOpacity>
-
+      </TouchableOpacity>:''
+      }
       <TouchableOpacity style={styles.cllButton}>
         <Ionicons name="call" size={24} color="white" />
       </TouchableOpacity>

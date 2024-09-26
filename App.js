@@ -24,6 +24,7 @@ import Sidebar from './pages/Sidebar';
 import MinhasCompras from './pages/MinhasCompras';
 import RegistroAdm from './pages/admPages/RegistroAdm';
 import CadastrarVeiculo from './pages/CadastrarVeiculo';
+import Teste from './pages/TestImage'
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ export default function App() {
         <Stack.Screen name="Compras" component={MinhasCompras} />
         <Stack.Screen name="AdmRegistro" component={RegistroAdm} />
         <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} />
+        <Stack.Screen name="Teste" component={Teste} />
       </Stack.Navigator>
 
       {/* Renderizar o Footer condicionalmente */}

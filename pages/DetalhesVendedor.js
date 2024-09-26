@@ -7,6 +7,7 @@ import FooterVendas from '../components/FooterVendas';
 export default function DetalhesVendedor() {
   const route = useRoute();
   const { usuarioId } = route.params;
+  console.log(usuarioId)
 
   const [vendedor, setVendedor] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ export default function DetalhesVendedor() {
       try {
         const response = await fetch(`https://pi3-backend-i9l3.onrender.com/usuarios/${usuarioId}`);
         const data = await response.json();
+        console.log(data)
         setVendedor(data);
       } catch (error) {
         console.error('Erro ao buscar dados do vendedor:', error);
@@ -40,12 +42,13 @@ export default function DetalhesVendedor() {
           style={styles.image}
           source={vendedor?.foto ? { uri: vendedor.foto } : require('../assets/images/avatar-hidan.jpg')}
         />
-        <Text style={styles.name}>{vendedor?.nome || 'Nome do Vendedor'}</Text>
-        <Text style={styles.location}>Localização: {vendedor?.cidade || 'Cidade'} - {vendedor?.estado || 'Estado'}</Text>
+        <Text style={styles.name}>Vendedor: {vendedor?.nome}</Text>
+        <Text style={styles.location}>Contato: {vendedor?.telefone}</Text>
+        <Text style={styles.location}>{vendedor?.email}</Text>
         {/* Outras informações do vendedor */}
       </View>
 
-      <FooterVendas />
+      <FooterVendas teste={false} />
     </View>
   );
 }

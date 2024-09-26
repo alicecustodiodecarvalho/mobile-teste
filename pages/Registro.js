@@ -53,6 +53,8 @@ const Registro = ({ onRegister = () => {} }) => {
                 }
                 
                 // Salvar dados no AsyncStorage
+                await AsyncStorage.setItem('id', data.id.toString());
+                console.log(data.id.toString())
                 await AsyncStorage.setItem('nome', nome);
                 await AsyncStorage.setItem('email', email);
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);

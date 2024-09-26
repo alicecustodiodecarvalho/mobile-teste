@@ -54,7 +54,7 @@ export default function AtualizarDadosUser() {
 
         const cpfSemFormatacao = cpf.replace(/\D/g, '');
         const telSemFormatacao = telefone.replace(/\D/g, '');
-        const nascimentoFormatado = nascimento.split('/').reverse().join('-');
+        const nascimentoFormatado = nascimento.split('/').join('-');
 
         setLoading(true);
 
@@ -97,7 +97,8 @@ export default function AtualizarDadosUser() {
             setLoading(false);
         }
     };
-
+    const nascimentoFormatad = nascimento.split('-').reverse().join('-');
+ 
     return (
         <View style={styles.container}>
             <NavbarPadrao texto="Atualizar Meus Dados" />
@@ -140,7 +141,7 @@ export default function AtualizarDadosUser() {
                                 options={{ format: 'DD/MM/YYYY' }}
                                 style={styles.input}
                                 placeholder="Data de Nascimento"
-                                value={nascimento}
+                                value={nascimentoFormatad}
                                 onChangeText={setNascimento}
                             />
                         </View>

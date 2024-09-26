@@ -7,8 +7,8 @@ export default function NavbarDetalhes({ texto, vendedor, veiculo }) {
   const navigation = useNavigation();
 
   const handleNavigateToVendedor = () => {
-    if (vendedor && vendedor.usuarioId) {
-      navigation.navigate('DetalhesVendedor', { usuarioId: vendedor.usuarioId });
+    if (vendedor && vendedor) {
+      navigation.navigate('DetalhesVendedor', { usuarioId: vendedor });
     } else {
       console.warn("Vendedor não encontrado");
     }
