@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
 import CardMeuVeiculo from '../components/CardMeuVeiculo';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Para pegar o ID do usuário logado
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export default function MeusVeiculos() {
     const [meusVeiculos, setMeusVeiculos] = useState([]);
@@ -26,29 +28,32 @@ export default function MeusVeiculos() {
         fetchUserId();
     }, []);
 
-    useEffect(() => {
-        const fetchMeusVeiculos = async () => {
-            if (userId) {
-                try {
-                    const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
-                    if (response.ok) {
-                        const data = await response.json();
-                        const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === parseInt(userId)); // Filtra os veículos pelo userId
-                        console.log(veiculosDoUsuario)
-                        setMeusVeiculos(veiculosDoUsuario);
-                    } else {
-                        throw new Error("Erro ao carregar veículos");
-                    }
-                } catch (error) {
-                    setErro(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            }
-        };
+    useFocusEffect(
 
-        fetchMeusVeiculos();
-    }, [userId]); // Só busca os veículos quando o userId está definido
+        React.useCallback(() => {
+            const fetchMeusVeiculos = async () => {
+                if (userId) {
+                    try {
+                        const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
+                        if (response.ok) {
+                            const data = await response.json();
+                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === parseInt(userId)); // Filtra os veículos pelo userId
+                            console.log(veiculosDoUsuario)
+                            setMeusVeiculos(veiculosDoUsuario);
+                        } else {
+                            throw new Error("Erro ao carregar veículos");
+                        }
+                    } catch (error) {
+                        setErro(error.message);
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+            };
+
+            fetchMeusVeiculos();
+        }, [userId]) // Só busca os veículos quando o userId está definido
+    )
 
     return (
         <View style={styles.container}>
