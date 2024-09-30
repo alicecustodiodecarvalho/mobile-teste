@@ -19,6 +19,7 @@ export default function CatalogoCarros() {
         estado: ''
     });
     const [mostrarFiltros, setMostrarFiltros] = useState(false);
+    const [ordemInvertida, setOrdemInvertida] = useState(false);
 
     // useFocusEffect para garantir que os veículos sejam recarregados ao ganhar foco
     useFocusEffect(
@@ -52,11 +53,19 @@ export default function CatalogoCarros() {
         });
     };
 
+    const veiculosFiltrados = filtrarVeiculos();
+    const veiculosOrdenados = ordemInvertida ? veiculosFiltrados.slice().reverse() : veiculosFiltrados;
+
+    const handleOrdenar = () => {
+        setOrdemInvertida(!ordemInvertida);
+    };
+
     return (
         <View style={styles.container}>
             <NavbarPesquisa 
                 alterarModoExibicao={() => setModoExibicao(!modoExibicao)} 
                 mostrarFiltros={() => setMostrarFiltros(!mostrarFiltros)} 
+                ordenar={handleOrdenar}
             />
 
             {mostrarFiltros && (
@@ -118,9 +127,9 @@ export default function CatalogoCarros() {
             )}
 
             <View style={styles.scro}>
-                <ScrollView>
+                <ScrollView >
                     {veiculos.length === 0 && <Text>Carregando...</Text>}
-                    {filtrarVeiculos().map(veiculo =>
+                    {veiculosOrdenados.map(veiculo =>
                         modoExibicao ? (
                             <CardCarMaior
                                 key={veiculo.id}
@@ -169,5 +178,5 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
         backgroundColor: '#fff',
-    },
+    }
 });

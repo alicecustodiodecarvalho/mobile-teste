@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-export default function NavbarPesquisa({ alterarModoExibicao, mostrarFiltros }) {
+export default function NavbarPesquisa({ alterarModoExibicao, mostrarFiltros, ordenar }) {
   const navigation = useNavigation();
 
   return (
@@ -28,7 +28,7 @@ export default function NavbarPesquisa({ alterarModoExibicao, mostrarFiltros }) 
           <Text style={styles.navText}>Filtrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={ordenar}>
           <Ionicons name="filter" size={24} color="black" />
           <Text style={styles.navText}>Ordenar</Text>
         </TouchableOpacity>

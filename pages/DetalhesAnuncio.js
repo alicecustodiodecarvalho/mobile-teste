@@ -9,6 +9,7 @@ const { width } = Dimensions.get('window');
 export default function CarDetailsPage() {
   const route = useRoute();
   const { veiculo } = route.params;
+  console.log('abc',useRoute())
 
   const [expanded, setExpanded] = useState(false);
 
@@ -30,7 +31,7 @@ export default function CarDetailsPage() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <NavbarDetalhes texto="Anúncio" vendedor={carDetails.usuarioId} />
+     <NavbarDetalhes texto="Anúncio" vendedor={carDetails.usuarioId} veiculo={carDetails} />
 
       <View style={styles.imageGallery}>
         <ScrollView horizontal pagingEnabled>
@@ -42,7 +43,7 @@ export default function CarDetailsPage() {
             />
           ) : (
             <Image
-              source={{ uri: 'https://via.placeholder.com/300' }}
+              // source={{ uri: veiculo.veiculo }}
               style={styles.carImage}
             />
           )}

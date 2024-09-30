@@ -7,24 +7,23 @@ export default function CardCarMaior(props) {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity 
-      style={styles.pad} 
-      onPress={() => navigation.navigate('Anuncio', { veiculo: props })} 
+    <TouchableOpacity
+      style={styles.pad}
+      onPress={() => navigation.navigate('Anuncio', { veiculo: props })}
     >
       <View style={styles.card}>
-        {/* Verifica se 'props.foto' existe  */}
         {props.foto ? (
           <Image
             style={styles.image}
-            source={ props.foto }
+            source={props.foto}
           />
         ) : (
           <Image
             style={styles.image}
-            // source={require('../assets/placeholder_image.png')} 
+          // source={require('../assets/placeholder_image.png')} 
           />
         )}
-        
+
         <View style={styles.info1}>
           <View style={styles.madelo}>
             <Text style={styles.marca}>{props.marca}</Text>
@@ -49,55 +48,55 @@ export default function CardCarMaior(props) {
 }
 
 const styles = StyleSheet.create({
-    pad: {
-        paddingVertical: 15
-    },
-    card: {
-        elevation: 10,
-        borderRadius: 8,
-        backgroundColor: 'white',
-    },
-    image: {
-        width: '100%',
-        height: 220,
-        borderTopLeftRadius: 6,
-        borderTopRightRadius: 6
-    },
-    info1: {
-        padding: 5,
-        gap: 7
-    },
-    madelo: {
-        flexDirection: 'row'
-    },
-    marca: {
-        fontWeight: 'bold'
-    },
-    modelo: {
-        fontWeight: 'bold',
-        color: 'red'
-    },
-    adicionais: {
-        color: 'gray'
-    },
-    preco: {
-        fontWeight: 'bold'
-    },
-    info2: {
-        padding: 5,
-        gap: 7
-    },
-    line1: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 2,
-        borderBottomWidth: 0.3,
-        borderBottomColor: 'lightgray'
-    },
-    text: {
-        color: 'gray',
-        fontSize: 12,
-        padding: 3
-    }
+  pad: {
+    paddingVertical: 15
+  },
+  card: {
+    elevation: 10,
+    borderRadius: 8,
+    backgroundColor: 'white',
+  },
+  image: {
+    width: '100%',
+    height: 220,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6
+  },
+  info1: {
+    padding: 5,
+    gap: 7
+  },
+  madelo: {
+    flexDirection: 'row'
+  },
+  marca: {
+    fontWeight: 'bold'
+  },
+  modelo: {
+    fontWeight: 'bold',
+    color: 'red'
+  },
+  adicionais: {
+    color: 'gray'
+  },
+  preco: {
+    fontWeight: 'bold'
+  },
+  info2: {
+    padding: 5,
+    gap: 7
+  },
+  line1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 2,
+    borderBottomWidth: 0.3,
+    borderBottomColor: 'lightgray'
+  },
+  text: {
+    color: 'gray',
+    fontSize: 12,
+    padding: 3
+  }
 
 })

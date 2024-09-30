@@ -126,7 +126,7 @@ const Registro = ({ onRegister = () => {} }) => {
                                 </View>
 
                                 <View style={styles.formGroup}>
-                                    <TextInput style={[styles.input, styles.nome]} placeholder="Email" value={email} onChangeText={setEmail} />
+                                    <TextInput style={[styles.input, styles.nome]} placeholder="Email" value={email} onChangeText={setEmail} keyboardType='email-address'/>
                                 </View>
 
                                 <View style={styles.formGroup}>

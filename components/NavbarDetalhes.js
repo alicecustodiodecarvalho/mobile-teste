@@ -3,15 +3,22 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function NavbarDetalhes({ texto, vendedor, veiculo }) {
+export default function NavbarDetalhes(props) {
   const navigation = useNavigation();
 
+  // console.log("Props na NavbarDetalhes:", props);
+
   const handleNavigateToVendedor = () => {
-    if (vendedor && vendedor) {
-      navigation.navigate('DetalhesVendedor', { usuarioId: vendedor });
+    if (props.vendedor) {
+      navigation.navigate('DetalhesVendedor', { usuarioId: props.vendedor });
     } else {
       console.warn("Vendedor não encontrado");
     }
+  };
+
+  const handleNavigateToVeiculo = async () => {
+    navigation.navigate('Anuncio', { veiculo: props.veiculo });
+
   };
 
   return (
@@ -20,14 +27,12 @@ export default function NavbarDetalhes({ texto, vendedor, veiculo }) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.titleText}>Detalhes do {texto}</Text>
+        <Text style={styles.titleText}>Detalhes do {props.texto}</Text>
       </View>
-
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Anuncio', { veiculo })}>
+        <TouchableOpacity style={styles.navItem} onPress={handleNavigateToVeiculo}>
           <Text style={styles.navText}>Veículo</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.navItem} onPress={handleNavigateToVendedor}>
           <Text style={styles.navText}>Vendedor</Text>
         </TouchableOpacity>
@@ -66,7 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     padding: 15,
-    gap: 6,
   },
   navText: {
     fontSize: 16,
