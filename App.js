@@ -5,11 +5,8 @@ import { useState, useEffect } from 'react';
 import CatalogoCarros from './pages/CatalogoCarros';
 import Home from './pages/Home';
 import Footer from './components/Footer';
-import LocalizacaoCarro from './pages/LocalizacaoCarro';
 import SideBarUser from './pages/SideBarUser';
 import MeusVeiculos from './pages/MeusVeiculos';
-import DescricaoCarro from './pages/DescricaoCarro';
-import DescricaoCarro2 from './pages/DescricaoCarro2';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Regras from './pages/Regras';
@@ -24,6 +21,7 @@ import Sidebar from './pages/Sidebar';
 import MinhasCompras from './pages/MinhasCompras';
 import RegistroAdm from './pages/admPages/RegistroAdm';
 import CadastrarVeiculo from './pages/CadastrarVeiculo';
+import Usuarios from './pages/admPages/Usuarios';
 import Teste from './pages/TestImage'
 
 const Stack = createNativeStackNavigator();
@@ -32,7 +30,7 @@ export default function App() {
   const navigationRef = useNavigationContainerRef();
   const [currentRoute, setCurrentRoute] = useState();
 
-  const noFooterRoutes = ['Login', 'Registro', 'LocalizacaoCarro', 'DescricaoCarro', 'DescricaoCarro2', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo'];
+  const noFooterRoutes = ['Login', 'Registro', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo', 'UsuarioAdm'];
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
@@ -48,20 +46,16 @@ export default function App() {
       const route = navigationRef.getCurrentRoute();
       setCurrentRoute(route?.name);
     }}>
-      <Stack.Navigator initialRouteName="Catalogo" screenOptions={({ route }) => ({
-          headerShown: false, // Esconde o cabeçalho em todas as telas
-          // Adicione qualquer outra configuração global aqui
+      <Stack.Navigator initialRouteName="MeusVeiculos" screenOptions={({ route }) => ({
+          headerShown: false,
         })}
       >
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Catalogo" component={CatalogoCarros} />
-        <Stack.Screen name="LocalizacaoCarro" component={LocalizacaoCarro} />
         <Stack.Screen name="SideBarUser" component={SideBarUser} />
         <Stack.Screen name="MeusVeiculos" component={MeusVeiculos} />
-        <Stack.Screen name="DescricaoCarro" component={DescricaoCarro} />
-        <Stack.Screen name="DescricaoCarro2" component={DescricaoCarro2} />
         <Stack.Screen name="Regras" component={Regras} />
         <Stack.Screen name="Anuncio" component={DetalhesAnuncio} />
         <Stack.Screen name="Enviar" component={EnviarProposta} />
@@ -74,10 +68,10 @@ export default function App() {
         <Stack.Screen name="Compras" component={MinhasCompras} />
         <Stack.Screen name="AdmRegistro" component={RegistroAdm} />
         <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} />
+        <Stack.Screen name="UsuarioAdm" component={Usuarios} />
         <Stack.Screen name="Teste" component={Teste} />
       </Stack.Navigator>
 
-      {/* Renderizar o Footer condicionalmente */}
       {!noFooterRoutes.includes(currentRoute) && <Footer />}
 
     </NavigationContainer>

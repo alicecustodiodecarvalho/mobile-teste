@@ -52,14 +52,12 @@ const Registro = ({ onRegister = () => {} }) => {
                     onRegister(data.user);
                 }
                 
-                // Salvar dados no AsyncStorage
                 await AsyncStorage.setItem('nome', nome);
                 await AsyncStorage.setItem('email', email);
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);
                 await AsyncStorage.setItem('telefone', telSemFormatacao);
                 await AsyncStorage.setItem('nascimento', nascimentoFormatado);
 
-                // Limpar os campos
                 setNome('');
                 setEmail('');
                 setCpf('');
@@ -68,7 +66,7 @@ const Registro = ({ onRegister = () => {} }) => {
                 setSenha('');
                 setConfirmarSenha('');
                 
-                navigation.navigate('Home');
+                navigation.navigate('UsuarioAdm');
             } else {
                 const errorText = await response.text();
                 Alert.alert('Erro', `Falha ao registrar usuário: ${errorText}`);

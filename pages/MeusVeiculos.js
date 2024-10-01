@@ -10,16 +10,16 @@ export default function MeusVeiculos() {
     const [meusVeiculos, setMeusVeiculos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState(null);
-    const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         const fetchUserId = async () => {
             try {
-                const id = await AsyncStorage.getItem('id'); // Pega o ID do usuário logado do AsyncStorage
+                const id = await AsyncStorage.getItem('id');
                 if (!id) {
                     throw new Error("Usuário não logado");
                 }
-                setUserId(id); // Define o ID do usuário no estado
+                setUserId(id); 
             } catch (error) {
                 setErro("Erro ao recuperar usuário");
             }
@@ -37,7 +37,7 @@ export default function MeusVeiculos() {
                         const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
                         if (response.ok) {
                             const data = await response.json();
-                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === parseInt(userId)); // Filtra os veículos pelo userId
+                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === parseInt(userId));
                             console.log(veiculosDoUsuario)
                             setMeusVeiculos(veiculosDoUsuario);
                         } else {
@@ -52,7 +52,7 @@ export default function MeusVeiculos() {
             };
 
             fetchMeusVeiculos();
-        }, [userId]) // Só busca os veículos quando o userId está definido
+        }, [userId])
     )
 
     return (

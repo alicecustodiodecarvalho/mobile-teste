@@ -9,10 +9,9 @@ export default function Login() {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [loading, setLoading] = useState(false); // Estado para o indicador de carregamento
-
+    const [loading, setLoading] = useState(false); 
     const handleLogin = async () => {
-        setLoading(true); // Ativa o loading ao iniciar o login
+        setLoading(true);
         try {
             const response = await fetch('https://pi3-backend-i9l3.onrender.com/auth/login', {
                 method: 'POST',
@@ -27,8 +26,8 @@ export default function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data); // Verifique o que está sendo retornado
-                if (data.nome) { // Verifique se nome existe
+                console.log(data); 
+                if (data.nome) { 
                     var id = data.id
                     await AsyncStorage.setItem('nome', data.nome);
                     await AsyncStorage.setItem('id', id.toString());
@@ -37,10 +36,15 @@ export default function Login() {
                     await AsyncStorage.setItem('token', data.accessToken);
                     await AsyncStorage.setItem('telefone', data.telefone);
                     await AsyncStorage.setItem('cpf', data.cpf);
+
+                    if (data.admin == true) {
+                        navigation.navigate('UsuarioAdm');
+                    } else {
+                        navigation.navigate('Home');
+                    }
                 } else {
                     console.warn('nome não encontrado no retorno da API');
                 }
-                navigation.navigate('Home');
             } else {
                 console.error('Falha ao fazer login', await response.text());
                 Alert.alert('Erro', 'Falha ao fazer login. Verifique suas credenciais.');
@@ -49,7 +53,7 @@ export default function Login() {
             console.error('Error:', error);
             Alert.alert('Erro', 'Ocorreu um erro ao tentar fazer login.');
         } finally {
-            setLoading(false); // Desativa o loading ao finalizar o login
+            setLoading(false);
         }
     };
 
@@ -86,7 +90,7 @@ export default function Login() {
                             />
                         </View>
                         <View style={styles.botoes}>
-                            {loading ? ( // Verifica se o estado de loading está ativo
+                            {loading ? ( 
                                 <ActivityIndicator size="large" color="red" />
                             ) : (
                                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
