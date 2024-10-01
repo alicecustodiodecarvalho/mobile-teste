@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExcluirModal from '../components/ModalExcluir';
+import SairModal from '../components/ModalSair';
 
 export default function SideBarUser() {
 
@@ -15,6 +16,16 @@ export default function SideBarUser() {
     };
 
     const closeModalExcluir = () => {
+        setModalVisibleExcluir(false);
+    };
+
+    const [modalVisibleSair, setModalVisibleSair] = useState(false);
+
+    const openModalSair = () => {
+        setModalVisibleSair(true);
+    };
+
+    const closeModalSair = () => {
         setModalVisibleExcluir(false);
     };
 
@@ -64,7 +75,13 @@ export default function SideBarUser() {
                     <Text style={styles.Textex}>Excluir minha conta</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.sair}>
+                <TouchableOpacity style={styles.textContainer} onPress={openModalSair}>
+                    <Text style={styles.Textex}>Sair</Text>
+                </TouchableOpacity>
+            </View>
             <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir} />
+            <SairModal visible={modalVisibleSair} onClose={closeModalSair} />
 
         </View>
     );
@@ -112,12 +129,15 @@ const styles = StyleSheet.create({
     },
     excluir: {
         justifyContent: 'flex-end',
-        flex: 1,
-        paddingBottom: 50
+        flex: 1
     },
     Textex: {
         color: 'red',
         fontSize: 16,
         fontWeight: 'bold'
-    }
+    },
+    sair: {
+        justifyContent: 'flex-end',
+        paddingBottom: 50
+    },
 });
