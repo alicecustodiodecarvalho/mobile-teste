@@ -15,6 +15,8 @@ const Registro = ({ onRegister = () => {} }) => {
     const [nascimento, setNascimento] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async () => {
@@ -42,7 +44,10 @@ const Registro = ({ onRegister = () => {} }) => {
                     telefone: telSemFormatacao,
                     nascimento: nascimentoFormatado,
                     senha,
-                    isAdmin: false
+                    isAdmin: false,
+                    foto_perfil: "https://t.ctcdn.com.br/GcoDwE5pfX70dkeeDLZb3qXpexg=/640x360/smart/i601453.png",
+                    cidade,
+                    estado
                 }),
             });
 
@@ -60,6 +65,8 @@ const Registro = ({ onRegister = () => {} }) => {
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);
                 await AsyncStorage.setItem('telefone', telSemFormatacao);
                 await AsyncStorage.setItem('nascimento', nascimentoFormatado);
+                await AsyncStorage.setItem('cidade', cidade);
+                await AsyncStorage.setItem('estado', estado);
 
                 // Limpar os campos
                 setNome('');
@@ -67,6 +74,8 @@ const Registro = ({ onRegister = () => {} }) => {
                 setCpf('');
                 setTelefone('');
                 setNascimento('');
+                setCidade('');
+                setEstado('');
                 setSenha('');
                 setConfirmarSenha('');
                 
@@ -127,6 +136,21 @@ const Registro = ({ onRegister = () => {} }) => {
 
                                 <View style={styles.formGroup}>
                                     <TextInput style={[styles.input, styles.nome]} placeholder="Email" value={email} onChangeText={setEmail} keyboardType='email-address'/>
+                                </View>
+
+                                <View style={styles.formGroup}>
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Cidade"
+                                        value={cidade}
+                                        onChangeText={setCidade}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Estado"
+                                        value={estado}
+                                        onChangeText={setEstado}
+                                    />
                                 </View>
 
                                 <View style={styles.formGroup}>

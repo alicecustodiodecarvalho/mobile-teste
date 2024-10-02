@@ -36,6 +36,7 @@ export default function Login() {
                     await AsyncStorage.setItem('token', data.accessToken);
                     await AsyncStorage.setItem('telefone', data.telefone);
                     await AsyncStorage.setItem('cpf', data.cpf);
+                    await AsyncStorage.setItem('foto', data.foto_perfil);
 
                     if (data.admin == true) {
                         navigation.navigate('UsuarioAdm');

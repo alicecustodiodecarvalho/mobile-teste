@@ -6,14 +6,19 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default function Header() {
     const [nome, setNome] = useState('');
+    const [foto, setFoto] = useState('');
 
     // Use o useFocusEffect para buscar o nome sempre que a tela ganhar foco
     useFocusEffect(
         React.useCallback(() => {
             const fetchNome = async () => {
                 const user = await AsyncStorage.getItem('nome');
+                const foto = await AsyncStorage.getItem('foto');
                 if (user) {
                     setNome(user);
+                }
+                if (foto) {
+                    setFoto(foto)
                 }
             };
             fetchNome();
@@ -26,7 +31,7 @@ export default function Header() {
                 <Text style={styles.name}>{nome}</Text>
                 <Image
                     style={styles.avatar}
-                    source={require('../assets/images/avatar-hidan.jpg')}
+                    source={{uri : foto}}
                 />
             </View>
             <Image

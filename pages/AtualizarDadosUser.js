@@ -17,6 +17,8 @@ export default function AtualizarDadosUser() {
     const [nascimento, setNascimento] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -28,6 +30,8 @@ export default function AtualizarDadosUser() {
                 const storedEmail = await AsyncStorage.getItem('email');
                 const storedCpf = await AsyncStorage.getItem('cpf');
                 const storedTelefone = await AsyncStorage.getItem('telefone');
+                const storedCidade = await AsyncStorage.getItem('cidade');
+                const storedEstado = await AsyncStorage.getItem('estado');
                 const storedNascimento = await AsyncStorage.getItem('nascimento');
 
                 if (storedId) setId(storedId);
@@ -35,6 +39,8 @@ export default function AtualizarDadosUser() {
                 if (storedEmail) setEmail(storedEmail);
                 if (storedCpf) setCpf(storedCpf);
                 if (storedTelefone) setTelefone(storedTelefone);
+                if (storedCidade) setCidade(storedCidade);
+                if (storedEstado) setEstado(storedEstado);
                 if (storedNascimento) setNascimento(storedNascimento);
             } catch (error) {
                 console.error('Erro ao carregar os dados do usuário:', error);
@@ -71,6 +77,8 @@ export default function AtualizarDadosUser() {
                     email,
                     cpf: cpfSemFormatacao,
                     telefone: telSemFormatacao,
+                    cidade,
+                    estado
                     // nascimento: nascimentoFormatado,
                     // senha
                 }),
@@ -82,7 +90,9 @@ export default function AtualizarDadosUser() {
                 await AsyncStorage.setItem('email', email);
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);
                 await AsyncStorage.setItem('telefone', telSemFormatacao);
-                await AsyncStorage.setItem('storedNascimento', nascimentoFormatado);
+                await AsyncStorage.setItem('cidade', cidade);
+                await AsyncStorage.setItem('estado', estado);
+                await AsyncStorage.setItem('nascimento', nascimentoFormatado);
 
                 Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
                 navigation.navigate('Home');
@@ -98,7 +108,7 @@ export default function AtualizarDadosUser() {
         }
     };
     const nascimentoFormatad = nascimento.split('-').reverse().join('-');
- 
+
     return (
         <View style={styles.container}>
             <NavbarPadrao texto="Atualizar Meus Dados" />
@@ -151,6 +161,22 @@ export default function AtualizarDadosUser() {
                             value={email}
                             onChangeText={setEmail}
                         />
+
+                        <View style={styles.row}>
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Cidade"
+                                value={cidade}
+                                onChangeText={setCidade}
+                            />
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Estado"
+                                value={estado}
+                                onChangeText={setEstado}
+                            />
+                        </View>
+
                         <TextInputMask
                             type={'cel-phone'}
                             options={{
