@@ -26,7 +26,7 @@ const SairModal = ({ visible, onClose }) => {
                         <TouchableOpacity style={styles.botao2}>
                             <Text style={styles.text}>Sair</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.botao}>
+                        <TouchableOpacity style={styles.botao} onPress={onClose}>
                             <Text style={styles.text}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>

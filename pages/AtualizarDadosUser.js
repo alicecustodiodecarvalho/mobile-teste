@@ -19,6 +19,7 @@ export default function AtualizarDadosUser() {
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
+    const [foto, setFoto] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -33,6 +34,7 @@ export default function AtualizarDadosUser() {
                 const storedCidade = await AsyncStorage.getItem('cidade');
                 const storedEstado = await AsyncStorage.getItem('estado');
                 const storedNascimento = await AsyncStorage.getItem('nascimento');
+                const storedFoto = await AsyncStorage.getItem('foto');
 
                 if (storedId) setId(storedId);
                 if (storedNome) setNome(storedNome);
@@ -42,6 +44,7 @@ export default function AtualizarDadosUser() {
                 if (storedCidade) setCidade(storedCidade);
                 if (storedEstado) setEstado(storedEstado);
                 if (storedNascimento) setNascimento(storedNascimento);
+                if (storedFoto) setFoto(storedFoto);
             } catch (error) {
                 console.error('Erro ao carregar os dados do usuário:', error);
             }
@@ -116,7 +119,7 @@ export default function AtualizarDadosUser() {
                 <View style={styles.image}>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/images/avatar-hidan.jpg')}
+                            source={{uri:foto}}
                             style={styles.perfilImage}
                         />
                         <Text>

@@ -4,6 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExcluirModal from '../components/ModalExcluir';
 import SairModal from '../components/ModalSair';
+import { useFocusEffect } from '@react-navigation/native';
+
+import fots from '../assets/images/avatar-hidan.jpg'
+
 
 export default function SideBarUser() {
 
@@ -26,26 +30,33 @@ export default function SideBarUser() {
     };
 
     const closeModalSair = () => {
-        setModalVisibleExcluir(false);
+        setModalVisibleSair(false);
     };
 
     const [nome, setNome] = useState('Usuário');
+    const [foto, setFoto] = useState();
 
-    useEffect(() => {
-        const fetchNome = async () => {
-            const user = await AsyncStorage.getItem('nome');
-            if (user) {
-                setNome(user);
-            }
-        };
-        fetchNome();
-    }, []);
-
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchNome = async () => {
+                const user = await AsyncStorage.getItem('nome');
+                const foto = await AsyncStorage.getItem('foto');
+                if (user) {
+                    setNome(user);
+                }
+                if (foto) {
+                    setFoto(foto)
+                }else{setFoto(fots)}
+            };
+            fetchNome();
+        }, [])
+    );
+ 
     return (
         <View style={styles.container}>
             <View style={styles.perfilContainer}>
                 <Image
-                    source={require('../assets/images/avatar-hidan.jpg')}
+                    source={{uri: foto}}
                     style={styles.perfilImage}
                 />
                 <View style={styles.usuario}>

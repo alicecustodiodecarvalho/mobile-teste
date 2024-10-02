@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import ExcluirDefModal from '../components/ModalExcluirDef'
 
 const ExcluirModal = ({ visible, onClose }) => {
-
-    const [modalVisibleExcluirDef, setModalVisibleExcluirDef] = useState(false);
-
-    const openModalExcluirDef = () => {
-        setModalVisibleExcluirDef(true);
-    };
-    
-    const closeModalExcluirDef = () => {
-        setModalVisibleExcluirDef(false);
-    };
-
-    
-
     return (
         <Modal
             transparent={true}
@@ -36,16 +22,15 @@ const ExcluirModal = ({ visible, onClose }) => {
                         <Text style={styles.text3}>Depois que você apaga uma conta, não há como voltar atrás. Por favor, tenha certeza.</Text>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.botao2} onPress={openModalExcluirDef}>
+                        <TouchableOpacity style={styles.botao2} >
                             <Text style={styles.text}>Excluir</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.botao}>
+                        <TouchableOpacity style={styles.botao} onPress={onClose}>
                             <Text style={styles.text}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
-            <ExcluirDefModal visible={modalVisibleExcluirDef} onClose={closeModalExcluirDef}/>
         </Modal>
     );
 };

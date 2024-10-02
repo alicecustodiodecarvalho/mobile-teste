@@ -4,6 +4,8 @@ import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
+import fots from '../assets/images/avatar-hidan.jpg'
+
 export default function Header() {
     const [nome, setNome] = useState('');
     const [foto, setFoto] = useState('');
@@ -19,7 +21,7 @@ export default function Header() {
                 }
                 if (foto) {
                     setFoto(foto)
-                }
+                }else{setFoto(fots)}
             };
             fetchNome();
         }, [])
