@@ -23,6 +23,7 @@ import RegistroAdm from './pages/admPages/RegistroAdm';
 import CadastrarVeiculo from './pages/CadastrarVeiculo';
 import Usuarios from './pages/admPages/Usuarios';
 import Teste from './pages/TestImage'
+import TesteV from './pages/TesteCadVeic'
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,7 @@ export default function App() {
         <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} />
         <Stack.Screen name="UsuarioAdm" component={Usuarios} />
         <Stack.Screen name="Teste" component={Teste} />
+        <Stack.Screen name="TesteV" component={TesteV} />
       </Stack.Navigator>
 
       {!noFooterRoutes.includes(currentRoute) && <Footer />}
