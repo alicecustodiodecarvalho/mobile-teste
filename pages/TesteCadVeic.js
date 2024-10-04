@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function AtualizarDadosCarro() {
+export default function CadastrarVeiculo() {
     const navigation = useNavigation();
 
     const [txtCep, setTxtCep] = useState('');

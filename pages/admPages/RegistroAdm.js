@@ -5,7 +5,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Registro = ({ onRegister = () => {} }) => {
+const RegistroAdm = ({ onRegister = () => {} }) => {
     const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
@@ -275,4 +275,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Registro;
+export default RegistroAdm;

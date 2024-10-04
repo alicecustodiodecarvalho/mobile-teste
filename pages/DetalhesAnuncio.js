@@ -6,7 +6,7 @@ import FooterVendas from '../components/FooterVendas';
 
 const { width } = Dimensions.get('window');
 
-export default function CarDetailsPage() {
+export default function DetalhesAnuncio() {
   const route = useRoute();
   const { veiculo } = route.params;
   console.log('abc',useRoute())

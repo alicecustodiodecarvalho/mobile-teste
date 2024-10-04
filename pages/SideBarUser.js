@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import fots from '../assets/images/avatar-hidan.jpg'
 
-
 export default function SideBarUser() {
 
     const navigation = useNavigation();

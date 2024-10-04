@@ -4,7 +4,7 @@ import NavbarPadrao from '../components/NavbarPadrao';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AtualizarDadosCarro() {
+export default function CadastrarVeiculo() {
   const navigation = useNavigation();
 
   const [txtCep, setTxtCep] = useState('');

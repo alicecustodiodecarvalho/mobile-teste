@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function SideBarUser() {
+export default function SideBar() {
 
     const navigation = useNavigation();
 

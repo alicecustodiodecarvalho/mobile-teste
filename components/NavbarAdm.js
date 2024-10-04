@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-
 import logoImg from '../assets/images/logo.png'
 import avatar from '../assets/images/avatar-hidan.jpg'
+
 export default function NavbarAdm({ user, vend }) {
 
     return (
