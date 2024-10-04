@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import NavbarPadrao from '../components/NavbarPadrao';
 import Feather from '@expo/vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +16,6 @@ export default function AtualizarDadosUser() {
     const [telefone, setTelefone] = useState('');
     const [nascimento, setNascimento] = useState('');
     const [senha, setSenha] = useState('');
-    const [confirmarSenha, setConfirmarSenha] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [foto, setFoto] = useState('');
@@ -25,7 +24,6 @@ export default function AtualizarDadosUser() {
     useEffect(() => {
         const loadUserData = async () => {
             try {
-                // Carregando dados do AsyncStorage
                 const storedId = await AsyncStorage.getItem('id');
                 const storedNome = await AsyncStorage.getItem('nome');
                 const storedEmail = await AsyncStorage.getItem('email');
@@ -56,19 +54,22 @@ export default function AtualizarDadosUser() {
     const handleUpdate = async () => {
         const token = await AsyncStorage.getItem('token');
 
-        if (senha !== confirmarSenha) {
-            Alert.alert('Erro', 'As senhas não coincidem.');
-            return;
-        }
-
         const cpfSemFormatacao = cpf.replace(/\D/g, '');
         const telSemFormatacao = telefone.replace(/\D/g, '');
-        const nascimentoFormatado = nascimento.split('/').join('-');
+
+        // Formatação da data
+        const nascimentoFormatado = nascimento.split('/').reverse().join('-'); // Formato YYYY-MM-DD
+        const nascimentoDate = new Date(nascimentoFormatado); // Criação do objeto Date
+
+        // Verifica se a data é válida
+        if (isNaN(nascimentoDate.getTime())) {
+            Alert.alert('Erro', 'Data de nascimento inválida.');
+            return;
+        }
 
         setLoading(true);
 
         try {
-            // Atualizando dados no backend
             const response = await fetch(`https://pi3-backend-i9l3.onrender.com/usuarios/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -81,14 +82,12 @@ export default function AtualizarDadosUser() {
                     cpf: cpfSemFormatacao,
                     telefone: telSemFormatacao,
                     cidade,
-                    estado
-                    // nascimento: nascimentoFormatado,
-                    // senha
+                    estado,
+                    nascimento: nascimentoFormatado,
                 }),
             });
 
             if (response.ok) {
-                // Atualizando dados no AsyncStorage
                 await AsyncStorage.setItem('nome', nome);
                 await AsyncStorage.setItem('email', email);
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);
@@ -102,6 +101,7 @@ export default function AtualizarDadosUser() {
             } else {
                 const errorText = await response.text();
                 Alert.alert('Erro', `Falha ao atualizar dados: ${errorText}`);
+                console.log(errorText);
             }
         } catch (error) {
             console.error('Erro:', error);
@@ -110,123 +110,119 @@ export default function AtualizarDadosUser() {
             setLoading(false);
         }
     };
-    const nascimentoFormatad = nascimento.split('-').reverse().join('-');
+
+    const nascimentoFormatado = nascimento.split('-').reverse().join('-');
 
     return (
         <View style={styles.container}>
-            <NavbarPadrao texto="Atualizar Meus Dados" />
-            <View style={styles.container2}>
-                <View style={styles.image}>
-                    <TouchableOpacity>
-                        <Image
-                            source={{uri:foto}}
-                            style={styles.perfilImage}
-                        />
-                        <Text>
-                            <Feather name="edit-2" size={24} color="black" />
-                            Editar
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <NavbarPadrao texto="Atualizar Meus Dados" />
 
-                <View style={styles.headerContainer}>
-                    {/* Adicionando uma pequena margem para alinhar com a página de registro */}
-                </View>
-
-                <View style={styles.formContainer}>
-                    <View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Nome"
-                            value={nome}
-                            onChangeText={setNome}
-                        />
-                        <View style={styles.row}>
-                            <TextInputMask
-                                type={'cpf'}
-                                style={[styles.input, styles.cidadeEstado]}
-                                placeholder="CPF"
-                                value={cpf}
-                                onChangeText={setCpf}
+                <ScrollView style={styles.container2}>
+                    <View style={styles.image}>
+                        <TouchableOpacity>
+                            <Image
+                                source={foto ? { uri: foto } : require('../assets/images/nophoto.jpg')} // Coloque o caminho para sua imagem padrão
+                                style={styles.perfilImage}
                             />
-                            <TextInputMask
-                                type={'datetime'}
-                                options={{ format: 'DD/MM/YYYY' }}
-                                style={styles.input}
-                                placeholder="Data de Nascimento"
-                                value={nascimentoFormatad}
-                                onChangeText={setNascimento}
-                            />
-                        </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={setEmail}
-                        />
-
-                        <View style={styles.row}>
-                            <TextInput
-                                style={[styles.input, styles.cidadeEstado]}
-                                placeholder="Cidade"
-                                value={cidade}
-                                onChangeText={setCidade}
-                            />
-                            <TextInput
-                                style={[styles.input, styles.cidadeEstado]}
-                                placeholder="Estado"
-                                value={estado}
-                                onChangeText={setEstado}
-                            />
-                        </View>
-
-                        <TextInputMask
-                            type={'cel-phone'}
-                            options={{
-                                maskType: 'BRL',
-                                withDDD: true,
-                                dddMask: '(99) '
-                            }}
-                            style={styles.input}
-                            placeholder="Telefone"
-                            value={telefone}
-                            onChangeText={setTelefone}
-                            keyboardType='numeric'
-                        />
-                        <View style={styles.row}>
-                            <TextInput
-                                style={[styles.input, styles.cidadeEstado]}
-                                placeholder="Senha"
-                                secureTextEntry
-                                value={senha}
-                                onChangeText={setSenha}
-                            />
-                            <TextInput
-                                style={[styles.input, styles.cidadeEstado]}
-                                placeholder="Confirmar Senha"
-                                secureTextEntry
-                                value={confirmarSenha}
-                                onChangeText={setConfirmarSenha}
-                            />
-                        </View>
+                            <Text>
+                                <Feather name="edit-2" size={23} color="black" />
+                                Editar
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity
-                        style={styles.proxButton}
-                        onPress={handleUpdate}
-                    >
-                        {loading ? (
-                            <ActivityIndicator size="large" color="#fff" />
-                        ) : (
-                            <Text style={styles.buttonText}>Confirmar</Text>
-                        )}
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.headerContainer}></View>
+
+                    <View style={styles.formContainer}>
+                        <View>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Nome"
+                                value={nome}
+                                onChangeText={setNome}
+                            />
+                            <View style={styles.row}>
+                                <TextInputMask
+                                    type={'cpf'}
+                                    style={[styles.input, styles.cidadeEstado]}
+                                    placeholder="CPF"
+                                    value={cpf}
+                                    onChangeText={setCpf}
+                                />
+                                <TextInputMask
+                                    type={'datetime'}
+                                    options={{ format: 'DD/MM/YYYY' }}
+                                    style={styles.input}
+                                    placeholder="Data de Nascimento"
+                                    value={nascimentoFormatado}
+                                    onChangeText={setNascimento}
+                                />
+                            </View>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Email"
+                                value={email}
+                                onChangeText={setEmail}
+                            />
+
+                            <View style={styles.row}>
+                                <TextInput
+                                    style={[styles.input, styles.cidadeEstado]}
+                                    placeholder="Cidade"
+                                    value={cidade}
+                                    onChangeText={setCidade}
+                                />
+                                <TextInput
+                                    style={[styles.input, styles.cidadeEstado]}
+                                    placeholder="Estado"
+                                    value={estado}
+                                    onChangeText={setEstado}
+                                />
+                            </View>
+
+                            <TextInputMask
+                                type={'cel-phone'}
+                                options={{
+                                    maskType: 'BRL',
+                                    withDDD: true,
+                                    dddMask: '(99) '
+                                }}
+                                style={styles.input}
+                                placeholder="Telefone"
+                                value={telefone}
+                                onChangeText={setTelefone}
+                                keyboardType='numeric'
+                            />
+                            <View style={styles.row}>
+                                <TextInput
+                                    style={[styles.input, styles.senha]}
+                                    placeholder="Senha"
+                                    secureTextEntry
+                                    value={senha}
+                                    onChangeText={setSenha}>
+                                </TextInput>
+                                <TouchableOpacity>
+                                    <Feather name="edit-2" size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <TouchableOpacity
+                            style={styles.proxButton}
+                            onPress={handleUpdate}
+                        >
+                            {loading ? (
+                                <ActivityIndicator size="large" color="#fff" />
+                            ) : (
+                                <Text style={styles.buttonText}>Confirmar</Text>
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
             </View>
-        </View>
+        
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -248,6 +244,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
     },
     input: {
         height: 40,
@@ -260,12 +257,15 @@ const styles = StyleSheet.create({
     cidadeEstado: {
         width: '48%',
     },
+    senha: {
+        width: '90%',
+    },
     proxButton: {
         backgroundColor: '#ff0000',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 170,
     },
     buttonText: {
         color: '#fff',

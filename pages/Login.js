@@ -37,6 +37,8 @@ export default function Login() {
                     await AsyncStorage.setItem('telefone', data.telefone);
                     await AsyncStorage.setItem('cpf', data.cpf);
                     await AsyncStorage.setItem('foto', data.foto_perfil);
+                    await AsyncStorage.setItem('estado', data.estado);
+                    await AsyncStorage.setItem('cidade', data.cidade);
 
                     if (data.admin == true) {
                         navigation.navigate('UsuarioAdm');
