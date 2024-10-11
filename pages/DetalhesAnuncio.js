@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import NavbarDetalhes from '../components/NavbarDetalhes';
 import FooterVendas from '../components/FooterVendas';
+import NavbarPadrao from '../components/NavbarPadrao';
 
 const { width } = Dimensions.get('window');
 
 export default function DetalhesAnuncio() {
   const route = useRoute();
-  const { veiculo } = route.params;
+  const { veiculo, usuarioId } = route.params;
   console.log('abc',useRoute())
 
   const [expanded, setExpanded] = useState(false);
+  const [vendedor, setVendedor] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const toggleText = () => {
     setExpanded(!expanded);
@@ -29,9 +31,31 @@ export default function DetalhesAnuncio() {
     observacoes: 'Tô vendendo meu Supra...',
   });
 
+  useEffect(() => {
+    const fetchVendedor = async () => {
+      try {
+        const response = await fetch(`https://pi3-backend-i9l3.onrender.com/usuarios/${veiculo.usuarioId}`);
+        const data = await response.json();
+        console.log(data)
+        setVendedor(data);
+      } catch (error) {
+        console.error('Erro ao buscar dados do vendedor:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVendedor();
+  }, [usuarioId]);
+
+  if (loading) {
+    return <Text>Carregando...</Text>;
+  }
+
+  console.log(veiculo.usuarioId.toString())
   return (
     <ScrollView contentContainerStyle={styles.container}>
-     <NavbarDetalhes texto="Anúncio" vendedor={carDetails.usuarioId} veiculo={carDetails} />
+      <NavbarPadrao texto="Detalhes do Anúncuio"/>
 
       <View style={styles.imageGallery}>
         <ScrollView horizontal pagingEnabled>
@@ -118,6 +142,17 @@ export default function DetalhesAnuncio() {
           </TouchableOpacity>
         </View>
       </View>
+
+      <View style={styles.details1Container}>
+        <Image
+          style={styles.image}
+          source={vendedor?.foto ? { uri: vendedor.foto } : require('../assets/images/avatar-hidan.jpg')}
+        />
+        <Text style={styles.name}>Vendedor: {vendedor?.nome}</Text>
+        <Text style={styles.location}>Contato: {vendedor?.telefone}</Text>
+        <Text style={styles.location}>{vendedor?.email}</Text>
+      </View>
+
       <FooterVendas teste={true}/>
     </ScrollView>
   );
@@ -142,6 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 20,
+    borderBottomWidth: 1,
   },
   detailItem: {
     flexDirection: 'column',
@@ -179,7 +215,25 @@ const styles = StyleSheet.create({
   },
   ler: {
     color: 'red',
-    fontWeight: '900'
-  }
+    fontWeight: '900',
+  },
+  details1Container: {
+    padding: 16,
+    backgroundColor: '#FFF',
+    marginTop: 0,
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 16,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  location: {
+    color: '#888',
+  },
 });
 
