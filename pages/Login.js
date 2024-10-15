@@ -10,6 +10,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false); 
+    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar ou ocultar a senha
+
     const handleLogin = async () => {
         setLoading(true);
         try {
@@ -28,7 +30,7 @@ export default function Login() {
                 const data = await response.json();
                 console.log(data); 
                 if (data.nome) { 
-                    var id = data.id
+                    var id = data.id;
                     await AsyncStorage.setItem('nome', data.nome);
                     await AsyncStorage.setItem('id', id.toString());
                     await AsyncStorage.setItem('email', data.email);
@@ -39,7 +41,7 @@ export default function Login() {
                     await AsyncStorage.setItem('foto', data.foto_perfil);
                     await AsyncStorage.setItem('estado', data.estado);
                     await AsyncStorage.setItem('cidade', data.cidade);
-                    await AsyncStorage.setItem('nascimento', data.nascimento); // Salvar nascimento
+                    await AsyncStorage.setItem('nascimento', data.nascimento);
 
                     if (data.admin == true) {
                         navigation.navigate('UsuarioAdm');
@@ -85,13 +87,25 @@ export default function Login() {
                                 onChangeText={setEmail}
                                 keyboardType='email-address'
                             />
-                            <TextInput
-                                style={[styles.input, { marginBottom: 60 }]}
-                                placeholder="Senha"
-                                secureTextEntry
-                                value={senha}
-                                onChangeText={setSenha}
-                            />
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Senha"
+                                    secureTextEntry={!showPassword} // Alterna entre mostrar ou não a senha
+                                    value={senha}
+                                    onChangeText={setSenha}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => setShowPassword(!showPassword)}
+                                    style={styles.eyeIcon}
+                                >
+                                    <MaterialIcons
+                                        name={showPassword ? 'visibility' : 'visibility-off'}
+                                        size={24}
+                                        color="black"
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         <View style={styles.botoes}>
                             {loading ? ( 
@@ -147,6 +161,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#000',
         marginBottom: 20,
+    },
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+    },
+    eyeIcon: {
+        position: 'absolute',
+        right: 15,
     },
     button: {
         width: '80%',
