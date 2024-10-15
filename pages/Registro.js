@@ -5,7 +5,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Registro = ({ onRegister = () => {} }) => {
+const Registro = ({ onRegister = () => { } }) => {
     const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
@@ -18,6 +18,8 @@ const Registro = ({ onRegister = () => {} }) => {
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar ou ocultar a senha
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false); // Estado para mostrar ou ocultar a senha
 
     const handleRegister = async () => {
         if (senha !== confirmarSenha) {
@@ -56,7 +58,7 @@ const Registro = ({ onRegister = () => {} }) => {
                 if (typeof onRegister === 'function') {
                     onRegister(data.user);
                 }
-                
+
                 // Salvar dados no AsyncStorage
                 await AsyncStorage.setItem('id', data.id.toString());
                 console.log(data.id.toString())
@@ -78,7 +80,7 @@ const Registro = ({ onRegister = () => {} }) => {
                 setEstado('');
                 setSenha('');
                 setConfirmarSenha('');
-                
+
                 navigation.navigate('Home');
             } else {
                 const errorText = await response.text();
@@ -135,7 +137,7 @@ const Registro = ({ onRegister = () => {} }) => {
                                 </View>
 
                                 <View style={styles.formGroup}>
-                                    <TextInput style={[styles.input, styles.nome]} placeholder="Email" value={email} onChangeText={setEmail} keyboardType='email-address'/>
+                                    <TextInput style={[styles.input, styles.nome]} placeholder="Email" value={email} onChangeText={setEmail} keyboardType='email-address' />
                                 </View>
 
                                 <View style={styles.formGroup}>
@@ -169,21 +171,42 @@ const Registro = ({ onRegister = () => {} }) => {
                                     />
                                 </View>
 
-                                <View style={styles.formGroup}>
+                                <View style={styles.passwordContainer}>
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Senha"
-                                        secureTextEntry
+                                        secureTextEntry={!showPassword} // Alterna entre mostrar ou não a senha
                                         value={senha}
                                         onChangeText={setSenha}
                                     />
+                                    <TouchableOpacity
+                                        onPress={() => setShowPassword(!showPassword)}
+                                        style={styles.eyeIcon1}
+                                    >
+                                        <MaterialIcons
+                                            name={showPassword ? 'visibility' : 'visibility-off'}
+                                            size={24}
+                                            color="black"
+                                        />
+                                    </TouchableOpacity>
+
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Confirmar Senha"
-                                        secureTextEntry
+                                        secureTextEntry={!showPasswordConfirm}
                                         value={confirmarSenha}
                                         onChangeText={setConfirmarSenha}
                                     />
+                                     <TouchableOpacity
+                                        onPress={() => setShowPasswordConfirm(!showPasswordConfirm)}
+                                        style={styles.eyeIcon2}
+                                    >
+                                        <MaterialIcons
+                                            name={showPasswordConfirm ? 'visibility' : 'visibility-off'}
+                                            size={24}
+                                            color="black"
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                             <View style={styles.botao}>
@@ -300,6 +323,22 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         resizeMode: 'contain'
+    },
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        gap: 15
+    },
+    eyeIcon1: {
+        position: 'absolute',
+        left: 135,
+        height: 25
+    },
+    eyeIcon2: {
+        position: 'absolute',
+        right: 8,
+        height: 25
     },
 });
 

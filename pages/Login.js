@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     eyeIcon: {
         position: 'absolute',
         right: 15,
+        height: 45
     },
     button: {
         width: '80%',
