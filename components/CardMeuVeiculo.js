@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CardMeuVeiculo({ marca, modelo, valor, foto, cor }) {
+export default function CardMeuVeiculo({ id, marca, modelo, valor, foto, cor }) {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,10 @@ export default function CardMeuVeiculo({ marca, modelo, valor, foto, cor }) {
           </View>
           <Text style={styles.preco}>R$ {valor}</Text>
           <Text style={styles.preco}>{cor}</Text>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AtualizarAnuncio')}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('AtualizarAnuncio', { veiculoId: id })}  // Passando o id do veículo para a página de atualização
+          >
             <Text style={styles.text}>Atualizar dados do Anúncio</Text>
           </TouchableOpacity>
         </View>

@@ -5,7 +5,6 @@ import CardMeuVeiculo from '../components/CardMeuVeiculo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-
 export default function MeusVeiculos() {
     const [meusVeiculos, setMeusVeiculos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,6 +15,7 @@ export default function MeusVeiculos() {
         const fetchUserId = async () => {
             try {
                 const id = await AsyncStorage.getItem('id');
+                console.log('User ID:', id); // Log para verificar o ID
                 if (!id) {
                     throw new Error("Usuário não logado");
                 }
@@ -29,7 +29,6 @@ export default function MeusVeiculos() {
     }, []);
 
     useFocusEffect(
-
         React.useCallback(() => {
             const fetchMeusVeiculos = async () => {
                 if (userId) {
@@ -37,8 +36,11 @@ export default function MeusVeiculos() {
                         const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
                         if (response.ok) {
                             const data = await response.json();
-                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === parseInt(userId));
-                            console.log(veiculosDoUsuario)
+                            console.log(data); // Verifique a estrutura da resposta da API
+
+                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === userId);
+                            console.log('Veículos do Usuário:', veiculosDoUsuario); // Verifique os veículos do usuário
+                            
                             setMeusVeiculos(veiculosDoUsuario);
                         } else {
                             throw new Error("Erro ao carregar veículos");
