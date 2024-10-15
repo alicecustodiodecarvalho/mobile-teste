@@ -15,7 +15,6 @@ import EnviarProposta from './pages/EnviarProposta';
 import AtualizarDadosUser from './pages/AtualizarDadosUser';
 import AtualizarAnuncio from './pages/AtualizarAnuncio';
 import SobreNos from './pages/SobreNos';
-import DetalhesVendedor from './pages/DetalhesVendedor';
 import CompraCarro from './pages/CompraCarro';
 import Sidebar from './pages/Sidebar';
 import MinhasCompras from './pages/MinhasCompras';
@@ -31,7 +30,7 @@ export default function App() {
   const navigationRef = useNavigationContainerRef();
   const [currentRoute, setCurrentRoute] = useState();
 
-  const noFooterRoutes = ['Login', 'Registro', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'DetalhesVendedor', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo', 'UsuarioAdm'];
+  const noFooterRoutes = ['Login', 'Registro', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo', 'UsuarioAdm'];
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
@@ -63,7 +62,6 @@ export default function App() {
         <Stack.Screen name="AtualizarAnuncio" component={AtualizarAnuncio} />
         <Stack.Screen name="AtualizarDados" component={AtualizarDadosUser} />
         <Stack.Screen name="SobreNos" component={SobreNos} />
-        <Stack.Screen name="DetalhesVendedor" component={DetalhesVendedor} />
         <Stack.Screen name="Comprar" component={CompraCarro} />
         <Stack.Screen name="Sidebar" component={Sidebar} />
         <Stack.Screen name="Compras" component={MinhasCompras} />

@@ -39,6 +39,7 @@ export default function Login() {
                     await AsyncStorage.setItem('foto', data.foto_perfil);
                     await AsyncStorage.setItem('estado', data.estado);
                     await AsyncStorage.setItem('cidade', data.cidade);
+                    await AsyncStorage.setItem('nascimento', data.nascimento); // Salvar nascimento
 
                     if (data.admin == true) {
                         navigation.navigate('UsuarioAdm');

@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const SairModal = ({ visible, onClose }) => {
+    const [loading, setLoading] = useState(false);
+    const navigation = useNavigation();
+
+    const handleLogout = async () => {
+        setLoading(true);
+        try {
+            // Limpa o AsyncStorage, removendo todas as informações armazenadas
+            await AsyncStorage.clear();
+            Alert.alert('Sucesso', 'Você saiu da conta.');
+            onClose(); // Fecha o modal
+            navigation.navigate('Login'); // Redireciona para a tela de login
+        } catch (error) {
+            console.error('Erro ao sair da conta:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao tentar sair da conta.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Modal
@@ -20,11 +40,11 @@ const SairModal = ({ visible, onClose }) => {
                         <Text style={styles.text2}>Deseja realmente sair da conta?</Text>
                     </View>
                     <View style={styles.textpor}>
-                        <Text style={styles.text3}>Depois que você sair da conta, não há como voltar atrás. Por favor, tenha certeza.</Text>
+                        <Text style={styles.text3}>Depois que você sair da conta, será necessário fazer login novamente para acessar o aplicativo.</Text>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.botao2}>
-                            <Text style={styles.text}>Sair</Text>
+                        <TouchableOpacity style={styles.botao2} onPress={handleLogout} disabled={loading}>
+                            <Text style={styles.text}>{loading ? 'Saindo...' : 'Sair'}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.botao} onPress={onClose}>
                             <Text style={styles.text}>Cancelar</Text>
@@ -51,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     close: {
-        width: '100%'
+        width: '100%',
     },
     botao: {
         width: '40%',
@@ -59,7 +79,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'red',
         alignItems: 'center',
-        // marginBottom: 10,
         elevation: 3,
     },
     botao2: {
@@ -68,7 +87,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'lightgray',
         alignItems: 'center',
-        // marginBottom: 10,
         elevation: 3,
     },
     text: {
@@ -76,31 +94,27 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'white'
+        color: 'white',
     },
     row: {
         flexDirection: 'row',
         gap: 15,
         marginBottom: 10,
-
     },
-    textview: {
-        //  marginBottom: 20,
-    },
+    textview: {},
     text2: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     text3: {
-        fontSize: 17
+        fontSize: 17,
     },
     textpor: {
-        // marginBottom: 20,
         padding: 25,
         paddingBottom: 30,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 });
 
 export default SairModal;

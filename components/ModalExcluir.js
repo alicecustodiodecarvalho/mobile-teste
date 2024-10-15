@@ -1,8 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const ExcluirModal = ({ visible, onClose }) => {
+    const [loading, setLoading] = useState(false);
+    const navigation = useNavigation();
+
+    const handleDeleteAccount = async () => {
+        setLoading(true);
+        try {
+            const token = await AsyncStorage.getItem('token'); // Pega o token do AsyncStorage
+            const userId = await AsyncStorage.getItem('id'); // Pega o ID do usuário do AsyncStorage
+
+            const response = await fetch(`https://pi3-backend-i9l3.onrender.com/usuarios/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Envia o token de autenticação
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // Se a exclusão for bem-sucedida, limpa o AsyncStorage
+                await AsyncStorage.clear();
+                Alert.alert('Sucesso', 'Sua conta foi excluída com sucesso.');
+                onClose(); // Fecha o modal
+                navigation.navigate('Login'); // Redireciona para a tela de login
+            } else {
+                const errorText = await response.text();
+                Alert.alert('Erro', `Falha ao excluir conta: ${errorText}`);
+                console.log(errorText)
+            }
+        } catch (error) {
+            console.error('Erro ao excluir conta:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao tentar excluir a conta.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Modal
             transparent={true}
@@ -22,8 +60,8 @@ const ExcluirModal = ({ visible, onClose }) => {
                         <Text style={styles.text3}>Depois que você apaga uma conta, não há como voltar atrás. Por favor, tenha certeza.</Text>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.botao2} >
-                            <Text style={styles.text}>Excluir</Text>
+                        <TouchableOpacity style={styles.botao2} onPress={handleDeleteAccount} disabled={loading}>
+                            <Text style={styles.text}>{loading ? 'Excluindo...' : 'Excluir'}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.botao} onPress={onClose}>
                             <Text style={styles.text}>Cancelar</Text>
@@ -58,7 +96,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'red',
         alignItems: 'center',
-        // marginBottom: 10,
         elevation: 3,
     },
     botao2: {
@@ -67,7 +104,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'lightgray',
         alignItems: 'center',
-        // marginBottom: 10,
         elevation: 3,
     },
     text: {
@@ -81,11 +117,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 15,
         marginBottom: 10,
-
     },
-    textview: {
-        //  marginBottom: 20,
-    },
+    textview: {},
     text2: {
         fontSize: 20,
         fontWeight: 'bold'
@@ -94,7 +127,6 @@ const styles = StyleSheet.create({
         fontSize: 17
     },
     textpor: {
-        // marginBottom: 20,
         padding: 25,
         paddingBottom: 30,
         justifyContent: 'center',
