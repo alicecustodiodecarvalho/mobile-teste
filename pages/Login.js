@@ -10,7 +10,16 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false); 
-    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar ou ocultar a senha
+    const [showPassword, setShowPassword] = useState(false);
+
+    // Função para formatar a data
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
     const handleLogin = async () => {
         setLoading(true);
@@ -29,8 +38,11 @@ export default function Login() {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); 
-                if (data.nome) { 
+                if (data.nome) {
                     var id = data.id;
+                    
+                    const nascimentoFormatado = formatDate(data.nascimento); // Formata a data antes de salvar
+
                     await AsyncStorage.setItem('nome', data.nome);
                     await AsyncStorage.setItem('id', id.toString());
                     await AsyncStorage.setItem('email', data.email);
@@ -41,9 +53,10 @@ export default function Login() {
                     await AsyncStorage.setItem('foto', data.foto_perfil);
                     await AsyncStorage.setItem('estado', data.estado);
                     await AsyncStorage.setItem('cidade', data.cidade);
-                    await AsyncStorage.setItem('nascimento', data.nascimento);
+                    await AsyncStorage.setItem('nascimento', nascimentoFormatado); // Salva a data formatada
+                    console.log(nascimentoFormatado);
 
-                    if (data.admin == true) {
+                    if (data.admin === true) {
                         navigation.navigate('UsuarioAdm');
                     } else {
                         navigation.navigate('Home');
@@ -91,7 +104,7 @@ export default function Login() {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Senha"
-                                    secureTextEntry={!showPassword} // Alterna entre mostrar ou não a senha
+                                    secureTextEntry={!showPassword}
                                     value={senha}
                                     onChangeText={setSenha}
                                 />
@@ -108,7 +121,7 @@ export default function Login() {
                             </View>
                         </View>
                         <View style={styles.botoes}>
-                            {loading ? ( 
+                            {loading ? (
                                 <ActivityIndicator size="large" color="red" />
                             ) : (
                                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
