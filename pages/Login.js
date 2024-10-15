@@ -5,21 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Função para formatar a data sem ajuste de fuso horário
+const formatDateWithoutTimezone = (dateString) => {
+    const [year, month, day] = dateString.split('T')[0].split('-');
+    return `${day}/${month}/${year}`;
+};
+
 export default function Login() {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false); 
     const [showPassword, setShowPassword] = useState(false);
-
-    // Função para formatar a data
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
 
     const handleLogin = async () => {
         setLoading(true);
@@ -37,11 +34,9 @@ export default function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data); 
                 if (data.nome) {
-                    var id = data.id;
-                    
-                    const nascimentoFormatado = formatDate(data.nascimento); // Formata a data antes de salvar
+                    const id = data.id;
+                    const nascimentoFormatado = formatDateWithoutTimezone(data.nascimento); // Formata a data
 
                     await AsyncStorage.setItem('nome', data.nome);
                     await AsyncStorage.setItem('id', id.toString());
@@ -54,7 +49,6 @@ export default function Login() {
                     await AsyncStorage.setItem('estado', data.estado);
                     await AsyncStorage.setItem('cidade', data.cidade);
                     await AsyncStorage.setItem('nascimento', nascimentoFormatado); // Salva a data formatada
-                    console.log(nascimentoFormatado);
 
                     if (data.admin === true) {
                         navigation.navigate('UsuarioAdm');

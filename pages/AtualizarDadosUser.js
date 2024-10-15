@@ -6,6 +6,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
 
+// Função para formatar a data sem alterar o fuso horário
+const formatDateToInput = (dateString) => {
+    if (dateString) {
+        return dateString.split('T')[0].split('-').reverse().join('/');
+    }
+    return '';
+};
+
+// Função para formatar a data no formato YYYY-MM-DD (para envio ao backend)
+const formatDateForBackend = (dateString) => {
+    return dateString.split('/').reverse().join('-');
+};
+
 export default function AtualizarDadosUser() {
     const navigation = useNavigation();
 
@@ -41,7 +54,7 @@ export default function AtualizarDadosUser() {
                 if (storedTelefone) setTelefone(storedTelefone);
                 if (storedCidade) setCidade(storedCidade);
                 if (storedEstado) setEstado(storedEstado);
-                if (storedNascimento) setNascimento(storedNascimento);
+                if (storedNascimento) setNascimento(formatDateToInput(storedNascimento));
                 if (storedFoto) setFoto(storedFoto);
             } catch (error) {
                 console.error('Erro ao carregar os dados do usuário:', error);
@@ -56,12 +69,10 @@ export default function AtualizarDadosUser() {
 
         const cpfSemFormatacao = cpf.replace(/\D/g, '');
         const telSemFormatacao = telefone.replace(/\D/g, '');
-
-        // Formatação da data
-        const nascimentoFormatado = nascimento.split('/').reverse().join('-'); // Formato YYYY-MM-DD
-        const nascimentoDate = new Date(nascimentoFormatado); // Criação do objeto Date
+        const nascimentoFormatado = formatDateForBackend(nascimento);
 
         // Verifica se a data é válida
+        const nascimentoDate = new Date(nascimentoFormatado);
         if (isNaN(nascimentoDate.getTime())) {
             Alert.alert('Erro', 'Data de nascimento inválida.');
             return;
@@ -111,118 +122,116 @@ export default function AtualizarDadosUser() {
         }
     };
 
-    const nascimentoFormatado = nascimento.split('-').reverse().join('-');
-
     return (
         <View style={styles.container}>
-                <NavbarPadrao texto="Atualizar Meus Dados" />
+            <NavbarPadrao texto="Atualizar Meus Dados" />
 
-                <ScrollView style={styles.container2}>
-                    <View style={styles.image}>
-                        <TouchableOpacity>
-                            <Image
-                                source={foto ? { uri: foto } : require('../assets/images/nophoto.jpg')} // Coloque o caminho para sua imagem padrão
-                                style={styles.perfilImage}
-                            />
-                            <Text>
-                                <Feather name="edit-2" size={23} color="black" />
-                                Editar
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+            <ScrollView style={styles.container2}>
+                <View style={styles.image}>
+                    <TouchableOpacity>
+                        <Image
+                            source={foto ? { uri: foto } : require('../assets/images/nophoto.jpg')}
+                            style={styles.perfilImage}
+                        />
+                        <Text>
+                            <Feather name="edit-2" size={23} color="black" />
+                            Editar
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
-                    <View style={styles.headerContainer}></View>
+                <View style={styles.headerContainer}></View>
 
-                    <View style={styles.formContainer}>
-                        <View>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Nome"
-                                value={nome}
-                                onChangeText={setNome}
-                            />
-                            <View style={styles.row}>
-                                <TextInputMask
-                                    type={'cpf'}
-                                    style={[styles.input, styles.cidadeEstado]}
-                                    placeholder="CPF"
-                                    value={cpf}
-                                    onChangeText={setCpf}
-                                />
-                                <TextInputMask
-                                    type={'datetime'}
-                                    options={{ format: 'DD/MM/YYYY' }}
-                                    style={styles.input}
-                                    placeholder="Data de Nascimento"
-                                    value={nascimentoFormatado}
-                                    onChangeText={setNascimento}
-                                />
-                            </View>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Email"
-                                value={email}
-                                onChangeText={setEmail}
-                            />
-
-                            <View style={styles.row}>
-                                <TextInput
-                                    style={[styles.input, styles.cidadeEstado]}
-                                    placeholder="Cidade"
-                                    value={cidade}
-                                    onChangeText={setCidade}
-                                />
-                                <TextInput
-                                    style={[styles.input, styles.cidadeEstado]}
-                                    placeholder="Estado"
-                                    value={estado}
-                                    onChangeText={setEstado}
-                                />
-                            </View>
-
+                <View style={styles.formContainer}>
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nome"
+                            value={nome}
+                            onChangeText={setNome}
+                        />
+                        <View style={styles.row}>
                             <TextInputMask
-                                type={'cel-phone'}
-                                options={{
-                                    maskType: 'BRL',
-                                    withDDD: true,
-                                    dddMask: '(99) '
-                                }}
-                                style={styles.input}
-                                placeholder="Telefone"
-                                value={telefone}
-                                onChangeText={setTelefone}
-                                keyboardType='numeric'
+                                type={'cpf'}
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="CPF"
+                                value={cpf}
+                                onChangeText={setCpf}
                             />
-                            <View style={styles.row}>
-                                <TextInput
-                                    style={[styles.input, styles.senha]}
-                                    placeholder="Senha"
-                                    secureTextEntry
-                                    value={senha}
-                                    onChangeText={setSenha}>
-                                </TextInput>
-                                <TouchableOpacity>
-                                    <Feather name="edit-2" size={24} color="black" />
-                                </TouchableOpacity>
-                            </View>
+                            <TextInputMask
+                                type={'datetime'}
+                                options={{ format: 'DD/MM/YYYY' }}
+                                style={styles.input}
+                                placeholder="Data de Nascimento"
+                                value={nascimento}
+                                onChangeText={setNascimento}
+                            />
+                        </View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+
+                        <View style={styles.row}>
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Cidade"
+                                value={cidade}
+                                onChangeText={setCidade}
+                            />
+                            <TextInput
+                                style={[styles.input, styles.cidadeEstado]}
+                                placeholder="Estado"
+                                value={estado}
+                                onChangeText={setEstado}
+                            />
                         </View>
 
-                        <TouchableOpacity
-                            style={styles.proxButton}
-                            onPress={handleUpdate}
-                        >
-                            {loading ? (
-                                <ActivityIndicator size="large" color="#fff" />
-                            ) : (
-                                <Text style={styles.buttonText}>Confirmar</Text>
-                            )}
-                        </TouchableOpacity>
+                        <TextInputMask
+                            type={'cel-phone'}
+                            options={{
+                                maskType: 'BRL',
+                                withDDD: true,
+                                dddMask: '(99) '
+                            }}
+                            style={styles.input}
+                            placeholder="Telefone"
+                            value={telefone}
+                            onChangeText={setTelefone}
+                            keyboardType='numeric'
+                        />
+                        <View style={styles.row}>
+                            <TextInput
+                                style={[styles.input, styles.senha]}
+                                placeholder="Senha"
+                                secureTextEntry
+                                value={senha}
+                                onChangeText={setSenha}
+                            />
+                            <TouchableOpacity>
+                                <Feather name="edit-2" size={24} color="black" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </ScrollView>
-            </View>
-        
+
+                    <TouchableOpacity
+                        style={styles.proxButton}
+                        onPress={handleUpdate}
+                    >
+                        {loading ? (
+                            <ActivityIndicator size="large" color="#fff" />
+                        ) : (
+                            <Text style={styles.buttonText}>Confirmar</Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

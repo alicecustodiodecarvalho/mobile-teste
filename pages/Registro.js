@@ -18,8 +18,8 @@ const Registro = ({ onRegister = () => { } }) => {
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar ou ocultar a senha
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false); // Estado para mostrar ou ocultar a senha
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
     const handleRegister = async () => {
         if (senha !== confirmarSenha) {
@@ -61,7 +61,6 @@ const Registro = ({ onRegister = () => { } }) => {
 
                 // Salvar dados no AsyncStorage
                 await AsyncStorage.setItem('id', data.id.toString());
-                console.log(data.id.toString())
                 await AsyncStorage.setItem('nome', nome);
                 await AsyncStorage.setItem('email', email);
                 await AsyncStorage.setItem('cpf', cpfSemFormatacao);
@@ -175,7 +174,7 @@ const Registro = ({ onRegister = () => { } }) => {
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Senha"
-                                        secureTextEntry={!showPassword} // Alterna entre mostrar ou não a senha
+                                        secureTextEntry={!showPassword}
                                         value={senha}
                                         onChangeText={setSenha}
                                     />
