@@ -153,7 +153,7 @@ export default function DetalhesAnuncio() {
         <Text style={styles.location}>{vendedor?.email}</Text>
       </View>
 
-      <FooterVendas teste={true}/>
+      <FooterVendas teste={true} veiculo={veiculo} />
     </ScrollView>
   );
 }
