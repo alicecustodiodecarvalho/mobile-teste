@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import NavbarAdm from '../../components/NavbarAdm';
 import CardUser from '../../components/CardUser';
 

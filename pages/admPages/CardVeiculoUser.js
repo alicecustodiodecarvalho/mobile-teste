@@ -3,19 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 import Feather from '@expo/vector-icons/Feather';
-import ExcluirModal from '../../components/ModalExcluir';
+import ExcluirVeiculoModal from '../../components/ModalExcluirVeiculo';
 
-export default function CardMeuVeiculo({ id, marca, modelo, valor, foto, cor, km }) {
+export default function CardMeuVeiculo({ id, marca, modelo, valor, foto, cor, anoFabricacao }) {
   const navigation = useNavigation();
 
-  const [modalVisibleExcluir, setModalVisibleExcluir] = useState(false);
+  const [modalVisibleExcluirVeiculo, setModalVisibleExcluirVeiculo] = useState(false);
 
-  const openModalExcluir = () => {
-    setModalVisibleExcluir(true);
+  const openModalExcluirVeiculo = () => {
+    setModalVisibleExcluirVeiculo(true);
   };
 
-  const closeModalExcluir = () => {
-    setModalVisibleExcluir(false);
+  const closeModalExcluirVeiculo = () => {
+    setModalVisibleExcluirVeiculo(false);
   };
 
   return (
@@ -31,13 +31,13 @@ export default function CardMeuVeiculo({ id, marca, modelo, valor, foto, cor, km
             <Text style={styles.modelo}> {modelo}</Text>
           </View>
           <Text style={styles.preco}>R$: {valor}</Text>
-          <Text style={styles.preco}>{cor}</Text>
-          <Text style={styles.preco}>KM: {km}</Text>
-          <Feather name="trash-2" size={30} color="black" onPress={openModalExcluir} />
+          <Text style={styles.preco}>Cor: {cor}</Text>
+          <Text style={styles.preco}>Ano: {anoFabricacao}</Text>
+          <Feather name="trash-2" size={30} color="black" onPress={openModalExcluirVeiculo} />
         </View>
       </View>
 
-      <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir} />
+      <ExcluirVeiculoModal visible={modalVisibleExcluirVeiculo} onClose={closeModalExcluirVeiculo} />
     </View>
 
   );
@@ -46,6 +46,7 @@ export default function CardMeuVeiculo({ id, marca, modelo, valor, foto, cor, km
 const styles = StyleSheet.create({
   pad: {
     paddingVertical: 10,
+    marginBottom: 30
   },
   card: {
     flexDirection: 'row',
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     padding: 10,
+    borderRadius: 20
   },
   image: {
     width: 150,
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
   infos: {
     paddingLeft: 9,
     paddingBottom: 5,
-    gap: 16,
+    gap: 5,
     width: '60%',
   },
   madelo: {
@@ -79,12 +81,6 @@ const styles = StyleSheet.create({
   },
   preco: {
     fontWeight: 'bold',
-  },
-  button: {
-    borderRadius: 5,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    elevation: 3,
   },
   text: {
     fontSize: 10,

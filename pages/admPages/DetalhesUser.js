@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
 import NavbarPadrao from '../../components/NavbarPadrao';
 import Feather from '@expo/vector-icons/Feather';
 import ExcluirModal from '../../components/ModalExcluir';
 import CardVeiculoUser from '../admPages/CardVeiculoUser';
+import CardComprasUser from '../admPages/CardComprasUser';
 
 export default function DetalhesUser() {
 
     const route = useRoute();  // Acessa os parâmetros da navegação
-    const { nome, email, telefone, foto, cidade, estado, cpf, } = route.params || {};  // Verifica se route.params está definido
+    const { nome, email, telefone, foto, cidade, estado, cpf, usuarioId } = route.params || {};  // Inclui usuarioId do card clicado
 
     const [modalVisibleExcluir, setModalVisibleExcluir] = useState(false);
 
@@ -23,61 +22,39 @@ export default function DetalhesUser() {
         setModalVisibleExcluir(false);
     };
 
-    const [meusVeiculos, setMeusVeiculos] = useState([]);
+    const [veiculosDoUsuario, setVeiculosDoUsuario] = useState([]);
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState(null);
-    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        const fetchUserId = async () => {
+        const fetchVeiculos = async () => {
             try {
-                const id = await AsyncStorage.getItem('id');
-                console.log('User ID:', id); // Log para verificar o ID
-                if (!id) {
-                    throw new Error("Usuário não logado");
+                const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data); // Verifique a estrutura da resposta da API
+
+                    const veiculosUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === usuarioId);
+                    console.log('Veículos do Usuário:', veiculosUsuario); // Verifique os veículos do usuário clicado
+
+                    setVeiculosDoUsuario(veiculosUsuario);
+                } else {
+                    throw new Error("Erro ao carregar veículos");
                 }
-                setUserId(id); 
             } catch (error) {
-                setErro("Erro ao recuperar usuário");
+                setErro(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchUserId();
-    }, []);
-
-    useFocusEffect(
-        React.useCallback(() => {
-            const fetchMeusVeiculos = async () => {
-                if (userId) {
-                    try {
-                        const response = await fetch('https://pi3-backend-i9l3.onrender.com/veiculos');
-                        if (response.ok) {
-                            const data = await response.json();
-                            console.log(data); // Verifique a estrutura da resposta da API
-
-                            const veiculosDoUsuario = data.veiculos.filter(veiculo => veiculo.usuarioId === userId);
-                            console.log('Veículos do Usuário:', veiculosDoUsuario); // Verifique os veículos do usuário
-                            
-                            setMeusVeiculos(veiculosDoUsuario);
-                        } else {
-                            throw new Error("Erro ao carregar veículos");
-                        }
-                    } catch (error) {
-                        setErro(error.message);
-                    } finally {
-                        setLoading(false);
-                    }
-                }
-            };
-
-            fetchMeusVeiculos();
-        }, [userId])
-    )
+        fetchVeiculos();
+    }, [usuarioId]);  // Agora o efeito depende do usuarioId passado via rota
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <NavbarPadrao texto="Detalhes do Usuário" />
+        <ScrollView>
 
+            <NavbarPadrao texto="Detalhes do Usuário" />
             <View style={styles.details1Container}>
                 <Image
                     style={styles.image}
@@ -98,37 +75,35 @@ export default function DetalhesUser() {
 
             <ExcluirModal visible={modalVisibleExcluir} onClose={closeModalExcluir} />
 
-            <View style={styles.container}>
-                <View style={styles.scro}>
-                    {loading ? (
-                        <Text>Carregando...</Text>
-                    ) : erro ? (
-                        <Text style={{ color: 'red' }}>{erro}</Text>
-                    ) : meusVeiculos.length === 0 ? (
-                        <Text>Nenhum veículo encontrado.</Text>
-                    ) : (
-                        <ScrollView>
-                            {meusVeiculos.map(veiculo => (
-                                <CardVeiculoUser key={veiculo.id} {...veiculo} />
-                            ))}
-                        </ScrollView>
-                    )}
-                </View>
+            <Text style={styles.usu}>Anúncios do Usuário</Text>
+
+            <View style={styles.scro}>
+                {loading ? (
+                    <Text>Carregando...</Text>
+                ) : erro ? (
+                    <Text style={{ color: 'red' }}>{erro}</Text>
+                ) : veiculosDoUsuario.length === 0 ? (
+                    <Text style={{ marginLeft: 10, marginBottom: 30, marginTop: 20 }}>Esse usuário não possuiu nenhum anúncio.</Text>
+                ) : (
+                    <ScrollView>
+                        {veiculosDoUsuario.map(veiculo => (
+                            <CardVeiculoUser key={veiculo.id} {...veiculo} />
+                        ))}
+                    </ScrollView>
+                )}
             </View>
 
+            <Text style={styles.usu}>Compras do Usuário</Text>
+            
+            <CardComprasUser/>
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        backgroundColor: '#f5f5f5',
-    },
     details1Container: {
         padding: 16,
-        backgroundColor: '#FFF',
-        marginTop: 0,
+        // backgroundColor: '#FFF',
         borderBottomWidth: 1
     },
     image: {
@@ -148,6 +123,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',  // Adiciona espaçamento entre o texto e o ícone da lixeira
         alignItems: 'center',  // Alinha o conteúdo verticalmente no centro
+    },
+    usu: {
+        fontSize: 18,
+        marginLeft: 10,
+        fontWeight: 'bold',
+        marginTop: 20,
+        color: 'red'
+    },
+    scro:{
+        borderBottomWidth: 1
     }
 });
-
