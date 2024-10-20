@@ -45,17 +45,17 @@ export default function SideBarUser() {
                 }
                 if (foto) {
                     setFoto(foto)
-                }else{setFoto(fots)}
+                } else { setFoto(fots) }
             };
             fetchNome();
         }, [])
     );
- 
+
     return (
         <View style={styles.container}>
             <View style={styles.perfilContainer}>
                 <Image
-                    source={{uri: foto}}
+                    source={foto ? { uri: foto } : require('../assets/images/nophoto.jpg')}
                     style={styles.perfilImage}
                 />
                 <View style={styles.usuario}>

@@ -32,8 +32,8 @@ export default function Header() {
             <View style={styles.user}>
                 <Text style={styles.name}>{nome}</Text>
                 <Image
+                    source={foto ? { uri: foto } : require('../assets/images/nophoto.jpg')}
                     style={styles.avatar}
-                    source={{uri : foto}}
                 />
             </View>
             <Image
