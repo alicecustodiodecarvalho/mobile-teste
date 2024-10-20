@@ -23,6 +23,8 @@ import CadastrarVeiculo from './pages/CadastrarVeiculo';
 import Usuarios from './pages/admPages/Usuarios';
 import Teste from './pages/TestImage'
 import TesteV from './pages/TesteCadVeic'
+import Vendedores from './pages/admPages/Vendedores';
+import DetalhesUser from './pages/admPages/DetalhesUser';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +32,7 @@ export default function App() {
   const navigationRef = useNavigationContainerRef();
   const [currentRoute, setCurrentRoute] = useState();
 
-  const noFooterRoutes = ['Login', 'Registro', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo', 'UsuarioAdm'];
+  const noFooterRoutes = ['Login', 'Registro', 'Enviar', 'AtualizarAnuncio', 'AtualizarDados', 'SobreNos', 'Anuncio', 'Comprar', 'AdmRegistro', 'CadastrarVeiculo', 'UsuarioAdm', 'DetalhesUser'];
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
@@ -46,7 +48,7 @@ export default function App() {
       const route = navigationRef.getCurrentRoute();
       setCurrentRoute(route?.name);
     }}>
-      <Stack.Navigator initialRouteName="Login" screenOptions={({ route }) => ({
+      <Stack.Navigator initialRouteName="UsuarioAdm" screenOptions={({ route }) => ({
           headerShown: false,
         })}
       >
@@ -68,6 +70,8 @@ export default function App() {
         <Stack.Screen name="AdmRegistro" component={RegistroAdm} />
         <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} />
         <Stack.Screen name="UsuarioAdm" component={Usuarios} />
+        <Stack.Screen name="VendedorAdm" component={Vendedores} />
+        <Stack.Screen name="DetalhesUser" component={DetalhesUser} />
         <Stack.Screen name="Teste" component={Teste} />
         <Stack.Screen name="TesteV" component={TesteV} />
       </Stack.Navigator>

@@ -55,7 +55,7 @@ export default function DetalhesAnuncio() {
   console.log(veiculo.usuarioId.toString())
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <NavbarPadrao texto="Detalhes do Anúncuio"/>
+      <NavbarPadrao texto="Detalhes do Anúncio"/>
 
       <View style={styles.imageGallery}>
         <ScrollView horizontal pagingEnabled>
