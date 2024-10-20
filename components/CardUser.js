@@ -3,13 +3,13 @@ import { useNavigation } from '@react-navigation/native';  // Importando a naveg
 
 import avatar from '../assets/images/nophoto.jpg';
 
-export default function CardUser({ nome, email, telefone, foto, id }) {
+export default function CardUser({ nome, email, telefone, foto, id, cidade, estado, cpf }) {
     const navigation = useNavigation();  // Hook para acessar a navegação
 
     return (
         <TouchableOpacity 
             style={styles.card} 
-            onPress={() => navigation.navigate('DetalhesUser', { nome, email, telefone, foto })}  // Navega e passa os dados
+            onPress={() => navigation.navigate('DetalhesUser', { nome, email, telefone, foto, id, cidade, estado, cpf})}  // Navega e passa os dados
         >
             <Image source={foto ? { uri: foto } : avatar} style={styles.avatar} />
             <View style={styles.infos}>

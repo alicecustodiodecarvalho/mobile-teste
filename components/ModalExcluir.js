@@ -54,7 +54,7 @@ const ExcluirModal = ({ visible, onClose }) => {
                         <AntDesign name="close" size={24} color="black" onPress={onClose} />
                     </View>
                     <View style={styles.textview}>
-                        <Text style={styles.text2}>Deseja realmente excluir sua conta?</Text>
+                        <Text style={styles.text2}>Deseja realmente excluir a conta?</Text>
                     </View>
                     <View style={styles.textpor}>
                         <Text style={styles.text3}>Depois que você apaga uma conta, não há como voltar atrás. Por favor, tenha certeza.</Text>

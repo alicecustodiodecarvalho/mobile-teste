@@ -38,6 +38,8 @@ export default function Vendedores() {
                             cpf={usuario.cpf}
                             telefone={usuario.telefone}
                             nascimento={usuario.nascimento}
+                            cidade={usuario.cidade}
+                            estado={usuario.estado}
                             senha={usuario.senha}
                             // setUsuarios={setUsuarios}
                         />
